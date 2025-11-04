@@ -197,11 +197,14 @@ class ResumeAnalyzer {
         }
 
         jobsList.innerHTML = jobs.map(job => `
-            <div class="job-card ${job.isMatched ? 'matched' : ''}" data-category="${job.category}">
+            <div class="job-card ${job.isMatched ? 'matched' : ''} ${job.category === 'internship' ? 'internship-card' : ''}" data-category="${job.category}">
                 ${job.matchPercentage ? `<div class="match-percentage">${job.matchPercentage}% Match</div>` : ''}
+                ${job.category === 'internship' ? '<div class="internship-badge">🎓 Internship</div>' : ''}
                 <h3 class="job-title">${job.title}</h3>
                 <div class="job-company">${job.company}</div>
                 <div class="job-location">${job.location}</div>
+                ${job.duration ? `<div class="job-duration"><strong>Duration:</strong> ${job.duration}</div>` : ''}
+                ${job.stipend ? `<div class="job-stipend"><strong>Stipend:</strong> ${job.stipend}</div>` : ''}
                 <div class="job-description">${job.description}</div>
                 <div class="job-skills">
                     <strong>Required Skills:</strong>
@@ -281,6 +284,78 @@ class ResumeAnalyzer {
                 description: "Create interactive user interfaces using Vue.js and modern CSS.",
                 requiredSkills: ["Vue.js", "JavaScript", "HTML", "CSS", "Vuex", "Webpack"],
                 applyLink: "https://example.com/apply/6"
+            },
+            {
+                id: 7,
+                title: "Software Development Intern",
+                company: "Google",
+                location: "Mountain View, CA",
+                category: "internship",
+                description: "Summer internship program for computer science students. Work on real projects with mentorship.",
+                requiredSkills: ["Programming", "Data Structures", "Algorithms", "Any Language"],
+                applyLink: "https://careers.google.com/internships",
+                duration: "3 months",
+                stipend: "$8000/month"
+            },
+            {
+                id: 8,
+                title: "Frontend Development Intern",
+                company: "Microsoft",
+                location: "Redmond, WA",
+                category: "internship",
+                description: "Learn modern web development while contributing to Microsoft products.",
+                requiredSkills: ["HTML", "CSS", "JavaScript", "React"],
+                applyLink: "https://careers.microsoft.com/internships",
+                duration: "3-6 months",
+                stipend: "$7500/month"
+            },
+            {
+                id: 9,
+                title: "Data Science Intern",
+                company: "Netflix",
+                location: "Los Gatos, CA",
+                category: "internship",
+                description: "Analyze user data and build recommendation algorithms for streaming platform.",
+                requiredSkills: ["Python", "Statistics", "Machine Learning", "SQL"],
+                applyLink: "https://jobs.netflix.com/internships",
+                duration: "4 months",
+                stipend: "$9000/month"
+            },
+            {
+                id: 10,
+                title: "Mobile App Development Intern",
+                company: "Uber",
+                location: "San Francisco, CA",
+                category: "internship",
+                description: "Build mobile features for millions of users worldwide.",
+                requiredSkills: ["React Native", "iOS", "Android", "Mobile Development"],
+                applyLink: "https://www.uber.com/careers/internships",
+                duration: "3 months",
+                stipend: "$8500/month"
+            },
+            {
+                id: 11,
+                title: "Backend Engineering Intern",
+                company: "Airbnb",
+                location: "San Francisco, CA",
+                category: "internship",
+                description: "Work on scalable backend systems serving millions of travelers.",
+                requiredSkills: ["Java", "Python", "Databases", "System Design"],
+                applyLink: "https://careers.airbnb.com/internships",
+                duration: "3-4 months",
+                stipend: "$8200/month"
+            },
+            {
+                id: 12,
+                title: "AI/ML Research Intern",
+                company: "OpenAI",
+                location: "San Francisco, CA",
+                category: "internship",
+                description: "Research and develop cutting-edge AI models and applications.",
+                requiredSkills: ["Python", "TensorFlow", "PyTorch", "Research", "Mathematics"],
+                applyLink: "https://openai.com/careers/internships",
+                duration: "3-6 months",
+                stipend: "$10000/month"
             }
         ];
     }

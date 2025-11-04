@@ -1581,3 +1581,41 @@ body {
     margin-right: 0.5rem;
     margin-bottom: 0.25rem;
 }
+/* Internship-specific styles */
+.internship-card {
+    border-left: 4px solid #ff6b35;
+    background: linear-gradient(135deg, var(--card-background), rgba(255, 107, 53, 0.05));
+}
+
+.internship-badge {
+    background: #ff6b35;
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+}
+
+.job-duration, .job-stipend {
+    color: var(--secondary-color);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.job-duration strong, .job-stipend strong {
+    color: var(--primary-color);
+}
+
+.filter-btn[data-filter="internship"] {
+    background: linear-gradient(135deg, #ff6b35, #ff8c42);
+    color: white;
+    border: none;
+}
+
+.filter-btn[data-filter="internship"]:hover,
+.filter-btn[data-filter="internship"].active {
+    background: linear-gradient(135deg, #e55a2b, #e67a35);
+    transform: translateY(-1px);
+}
