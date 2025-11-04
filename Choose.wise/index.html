@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChooseWise - Choose Your Tech Future Wisely</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar" >
+        <div class="nav-container">
+            <div class="nav-logo">ChooseWise</div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link active">Home</a></li>
+                <li><a href="careers.html" class="nav-link">Careers</a></li>
+                <li><a href="roadmap.html" class="nav-link">Roadmap</a></li>
+                <li><a href="courses.html" class="nav-link">Courses</a></li>
+                <li><a href="jobs.html" class="nav-link">Jobs</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="btn-login" id="loginBtn">Login</button>
+                <button class="theme-toggle" id="themeToggle">🌙</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <section class="hero">
+            <div class="container">
+                <h1 class="hero-title">ChooseWise</h1>
+                <p class="hero-tagline">AI-Powered Career Guidance for Tech Professionals</p>
+                <p class="hero-description">Transform your career with personalized recommendations, skill assessments, and curated learning paths powered by artificial intelligence.</p>
+                <div class="hero-buttons">
+                    <a href="assessment.html" class="btn btn-primary">Start Assessment</a>
+                    <a href="careers.html" class="btn btn-secondary">Explore Careers</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="container">
+                <h2 class="section-title">Why Choose ChooseWise?</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🤖</div>
+                        <h3>AI-Powered Recommendations</h3>
+                        <p>Advanced algorithms analyze your skills and interests to suggest optimal career paths with 85%+ accuracy.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h3>Skill Assessment</h3>
+                        <p>Comprehensive evaluation system that identifies your strengths and areas for improvement with detailed feedback.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🛣️</div>
+                        <h3>Personalized Roadmaps</h3>
+                        <p>Step-by-step learning paths tailored to your goals, experience level, and preferred learning style.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💼</div>
+                        <h3>Job Matching</h3>
+                        <p>Connect with relevant opportunities from top tech companies based on your profile and career aspirations.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">10K+</div>
+                        <div class="stat-label">Students Guided</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">85%</div>
+                        <div class="stat-label">Success Rate</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">Partner Companies</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">AI Support</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta">
+            <div class="container">
+                <h2>Ready to Transform Your Tech Career?</h2>
+                <p>Join thousands of professionals who have successfully navigated their career transitions with ChooseWise.</p>
+                <a href="careers.html" class="btn btn-primary btn-large">Get Started Today</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 ChooseWise. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="login-modal" id="loginModal">
+        <div class="modal-overlay" id="modalOverlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Welcome Back</h2>
+                <button class="modal-close" id="modalClose">&times;</button>
+            </div>
+            <form class="login-form" id="loginForm">
+                <div class="form-group">
+                    <input type="email" name="email" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" name="password" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">Sign In</button>
+                <div class="form-divider">or</div>
+                <button type="button" class="btn btn-secondary btn-full" id="signupBtn">Create Account</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Chatbot -->
+    <div class="chatbot-container">
+        <button class="chatbot-toggle" id="chatbotToggle">💬</button>
+        <div class="chatbot-window" id="chatbotWindow">
+            <div class="chatbot-header">ChooseWise Assistant</div>
+            <div class="chatbot-messages" id="chatbotMessages">
+                <div class="message bot">Hi! I'm here to help with your tech career questions. Ask me anything!</div>
+            </div>
+            <div class="chatbot-input">
+                <input type="text" id="chatbotInput" placeholder="Type your question...">
+                <button id="chatbotSend">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

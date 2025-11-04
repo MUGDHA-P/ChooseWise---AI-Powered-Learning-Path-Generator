@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assessment - ChooseWise</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">ChooseWise</div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="careers.html" class="nav-link">Careers</a></li>
+                <li><a href="roadmap.html" class="nav-link">Roadmap</a></li>
+                <li><a href="courses.html" class="nav-link">Courses</a></li>
+                <li><a href="jobs.html" class="nav-link">Jobs</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            <button class="theme-toggle" id="themeToggle">🌙</button>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <section class="page-header">
+            <div class="container">
+                <h1>Career Assessment</h1>
+                <p>Discover your ideal tech career path through our AI-powered assessment</p>
+            </div>
+        </section>
+
+        <section class="assessment-section">
+            <div class="container">
+                <div class="assessment-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <div class="question-counter">
+                        <span id="currentQuestion">1</span> of <span id="totalQuestions">10</span>
+                    </div>
+
+                    <form id="assessmentForm" class="assessment-form">
+                        <div class="question-card" id="questionCard">
+                            <h2 id="questionTitle">What interests you most in technology?</h2>
+                            <div class="options-grid" id="optionsGrid">
+                                <!-- Options will be loaded by JavaScript -->
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-secondary" id="prevBtn" disabled>Previous</button>
+                                <button type="button" class="btn btn-primary" id="nextBtn">Next</button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="results-section" id="resultsSection" style="display: none;">
+                        <h2>Your Career Recommendations</h2>
+                        <div class="recommendations-grid" id="recommendationsGrid">
+                            <!-- Results will be loaded by JavaScript -->
+                        </div>
+                        <div class="form-actions">
+                            <a href="careers.html" class="btn btn-primary">Explore Careers</a>
+                            <button type="button" class="btn btn-secondary" id="retakeBtn">Retake Assessment</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 ChooseWise. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="assessment.js"></script>
+</body>
+</html>

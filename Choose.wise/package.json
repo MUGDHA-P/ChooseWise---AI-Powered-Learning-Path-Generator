@@ -1,0 +1,12 @@
+{
+  "name": "choosewise-backend",
+  "version": "1.0.0",
+  "description": "ChooseWise Backend for Account Creation",
+  "main": "backend.js",
+  "scripts": {
+    "start": "node backend.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
