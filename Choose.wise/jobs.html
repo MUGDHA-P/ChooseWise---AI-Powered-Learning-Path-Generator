@@ -30,8 +30,42 @@
             </div>
         </section>
 
+        <section class="resume-upload">
+            <div class="container">
+                <div class="upload-card">
+                    <h2>📄 Upload Your Resume</h2>
+                    <p>Get personalized job recommendations based on your skills and experience</p>
+                    <div class="upload-area" id="uploadArea">
+                        <input type="file" id="resumeFile" accept=".pdf,.doc,.docx" hidden>
+                        <div class="upload-content">
+                            <div class="upload-icon">📁</div>
+                            <p>Drag & drop your resume here or <span class="upload-link">browse files</span></p>
+                            <small>Supports PDF, DOC, DOCX (Max 5MB)</small>
+                        </div>
+                    </div>
+                    <div class="resume-analysis" id="resumeAnalysis" style="display: none;">
+                        <h3>Resume Analysis</h3>
+                        <div class="skills-detected" id="skillsDetected"></div>
+                        <button class="btn btn-primary" id="findMatchingJobs">Find Matching Jobs</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section class="jobs-section">
             <div class="container">
+                <div class="jobs-filter">
+                    <h2>Job Opportunities</h2>
+                    <div class="filter-options">
+                        <button class="filter-btn active" data-filter="all">All Jobs</button>
+                        <button class="filter-btn" data-filter="matched">Resume Matched</button>
+                        <button class="filter-btn" data-filter="internship">🎓 Internships</button>
+                        <button class="filter-btn" data-filter="frontend">Frontend</button>
+                        <button class="filter-btn" data-filter="backend">Backend</button>
+                        <button class="filter-btn" data-filter="fullstack">Full Stack</button>
+                        <button class="filter-btn" data-filter="data">Data Science</button>
+                    </div>
+                </div>
                 <div class="jobs-list" id="jobsList">
                     <!-- Job cards will be loaded by JavaScript -->
                 </div>
@@ -46,5 +80,6 @@
     </footer>
 
     <script src="script.js"></script>
+    <script src="resume-analyzer.js"></script>
 </body>
 </html>
