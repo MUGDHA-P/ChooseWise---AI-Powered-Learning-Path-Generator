@@ -641,11 +641,6 @@ function showSignupForm() {
         }
         
         try {
-            // First test if server is running
-            const testResponse = await fetch('/api/auth/test');
-            if (!testResponse.ok) {
-                throw new Error('Server not running. Please start the backend server.');
-            }
             
             const response = await fetch('/api/auth/register', {
                 method: 'POST',
@@ -667,13 +662,7 @@ function showSignupForm() {
             }
         } catch (error) {
             console.error('Registration error:', error);
-            if (error.message.includes('Server not running')) {
-                alert('Backend server is not running. Please start the server with "npm start" and try again.');
-            } else if (error.message.includes('fetch')) {
-                alert('Cannot connect to server. Make sure the backend is running on port 5000.');
-            } else {
-                alert('Registration failed: ' + error.message);
-            }
+            alert('Registration failed. Make sure server is running on port 3000.');
         }
     });
     

@@ -1,5 +1,7 @@
 const express = require('express');
 const path = require('path');
+require('dotenv').config();
+const emailService = require('./services/emailService');
 const app = express();
 
 const users = [];
@@ -11,7 +13,7 @@ app.get('/api/auth/test', (req, res) => {
   res.json({ message: 'Auth API is working!' });
 });
 
-app.post('/api/auth/register', (req, res) => {
+app.post('/api/auth/register', async (req, res) => {
   const { name, email, password } = req.body;
   
   if (users.find(u => u.email === email)) {
@@ -20,6 +22,8 @@ app.post('/api/auth/register', (req, res) => {
   
   const user = { id: Date.now().toString(), name, email };
   users.push({ ...user, password });
+  
+  await emailService.sendProgressNotification(email, 'registration', { name });
   
   res.json({ success: true, user });
 });
@@ -33,6 +37,37 @@ app.post('/api/auth/login', (req, res) => {
   }
   
   res.json({ success: true, user: { id: user.id, name: user.name, email: user.email } });
+});
+
+// Progress tracking endpoints
+app.post('/api/progress/assessment-start', async (req, res) => {
+  const { email } = req.body;
+  await emailService.sendProgressNotification(email, 'assessment_started');
+  res.json({ success: true });
+});
+
+app.post('/api/progress/assessment-complete', async (req, res) => {
+  const { email, score } = req.body;
+  await emailService.sendProgressNotification(email, 'assessment_completed', { score });
+  res.json({ success: true });
+});
+
+app.post('/api/progress/roadmap-generated', async (req, res) => {
+  const { email, career } = req.body;
+  await emailService.sendProgressNotification(email, 'roadmap_generated', { career });
+  res.json({ success: true });
+});
+
+app.post('/api/progress/course-enrolled', async (req, res) => {
+  const { email, courseName } = req.body;
+  await emailService.sendProgressNotification(email, 'course_enrolled', { courseName });
+  res.json({ success: true });
+});
+
+app.post('/api/progress/job-applied', async (req, res) => {
+  const { email, jobTitle } = req.body;
+  await emailService.sendProgressNotification(email, 'job_applied', { jobTitle });
+  res.json({ success: true });
 });
 
 app.get('*', (req, res) => {

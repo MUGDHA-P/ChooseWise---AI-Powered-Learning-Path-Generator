@@ -173,6 +173,11 @@ class AssessmentManager {
         this.setupEventListeners();
         this.updateProgress();
         this.updateButtons();
+        
+        // Track assessment start
+        if (window.ProgressTracker) {
+            ProgressTracker.trackAssessmentStart();
+        }
     }
 
     setupEventListeners() {
@@ -373,6 +378,13 @@ class AssessmentManager {
             recommendationsGrid.appendChild(recommendationCard);
         });
 
+        // Track assessment completion
+        if (window.ProgressTracker) {
+            const topCareer = sortedCareers[0];
+            const topScore = Math.min(Math.round((topCareer[1] / 15) * 100), 100);
+            ProgressTracker.trackAssessmentComplete(topScore);
+        }
+
         document.getElementById('questionCard').style.display = 'none';
         document.getElementById('resultsSection').style.display = 'block';
     }
@@ -402,6 +414,11 @@ function goToRoadmap(careerTitle) {
     
     // Store selected career in localStorage
     localStorage.setItem('selectedCareer', JSON.stringify(careerData));
+    
+    // Track roadmap generation
+    if (window.ProgressTracker) {
+        ProgressTracker.trackRoadmapGenerated(careerTitle);
+    }
     
     // Navigate to roadmap page
     window.location.href = 'roadmap.html';
