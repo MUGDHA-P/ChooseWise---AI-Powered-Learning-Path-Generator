@@ -985,6 +985,18 @@ function selectCareerFromModal(careerKey) {
     loadDynamicRoadmap();
 }
 
+// Password visibility toggle
+function togglePassword(inputId, button) {
+    const input = document.getElementById(inputId);
+    if (input.type === 'password') {
+        input.type = 'text';
+        button.textContent = '🙈';
+    } else {
+        input.type = 'password';
+        button.textContent = '👁️';
+    }
+}
+
 // Initialize all functionality when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     initTheme();
