@@ -486,7 +486,11 @@ function initLoginModal() {
         
         if (user) {
             localStorage.setItem('user', JSON.stringify(user));
-            alert(`Welcome back, ${user.name}!`);
+            
+            // Send login notification email
+            emailService.sendLoginEmail(user.email, user.name);
+            
+            alert(`Welcome back, ${user.name}! Login notification sent to your email.`);
             closeModal();
             updateUIForLoggedInUser(user);
         } else {
@@ -533,7 +537,10 @@ function initLoginModal() {
             localStorage.setItem('choosewise_users', JSON.stringify(users));
             localStorage.setItem('user', JSON.stringify(newUser));
             
-            alert(`Welcome to ChooseWise, ${newUser.name}!`);
+            // Send welcome email
+            emailService.sendWelcomeEmail(newUser.email, newUser.name);
+            
+            alert(`Welcome to ChooseWise, ${newUser.name}! Check your email for welcome message.`);
             signupModal.style.display = 'none';
             updateUIForLoggedInUser(newUser);
         });
@@ -771,16 +778,17 @@ function updateRoadmapPage(career) {
     localStorage.setItem('selectedCareer', JSON.stringify(career));
 }
 
-// Career-specific roadmap data
-const careerRoadmaps = {
+// Use comprehensive roadmap data
+const careerRoadmaps = window.comprehensiveRoadmaps || {
     "AI Engineer": {
         emoji: "🤖",
         motivationalQuote: "Building the future, one algorithm at a time! 🚀",
         beginner: {
-            title: "🌱 Foundation Building",
-            emoji: "🎯",
-            steps: ["🐍 Learn Python Programming", "📊 Master Mathematics & Statistics", "🏗️ Understand Data Structures"],
-            projects: ["📈 Linear Regression Model", "📊 Data Visualization Dashboard", "🧠 Basic Neural Network"]
+            title: "🌱 Foundation Building (3-6 months)",
+            duration: "3-6 months",
+            steps: ["🐍 Python Programming Basics", "📊 Mathematics & Statistics", "🏗️ Data Structures & Algorithms", "📈 Data Analysis with Pandas"],
+            courses: ["Python for Everybody (Coursera)", "Khan Academy Statistics", "CS50 Introduction to Computer Science"],
+            projects: ["📈 Stock Price Predictor", "📊 Sales Data Dashboard", "🧮 Calculator App"]
         },
         intermediate: {
             title: "⚡ Core AI Skills",
@@ -991,6 +999,22 @@ function togglePassword(inputId, button) {
     } else {
         input.type = 'password';
         button.textContent = '👁️';
+    }
+}
+
+// Step completion tracking
+function trackStepCompletion(stepName, nextStep) {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user && emailService) {
+        emailService.sendStepCompletionEmail(user.email, user.name, stepName, nextStep);
+    }
+}
+
+// Assessment completion tracking
+function trackAssessmentCompletion(careerRecommendation) {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user && emailService) {
+        emailService.sendAssessmentCompletionEmail(user.email, user.name, careerRecommendation);
     }
 }
 

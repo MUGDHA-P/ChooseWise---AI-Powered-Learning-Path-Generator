@@ -1,3 +1,0 @@
-@echo off
-echo Starting ChooseWise server...
-npm start
