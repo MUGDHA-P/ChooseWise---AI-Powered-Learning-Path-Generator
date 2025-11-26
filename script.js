@@ -4,157 +4,235 @@ const careersData = [
         title: "AI Engineer",
         description: "Design and develop artificial intelligence systems and machine learning models.",
         skills: ["Python", "TensorFlow", "Machine Learning", "Deep Learning"],
-        roadmap: ["Learn Python & Math", "Study ML Algorithms", "Practice with TensorFlow", "Build AI Projects", "Get ML Certification"]
+        roadmap: ["Learn Python & Math", "Study ML Algorithms", "Practice with TensorFlow", "Build AI Projects", "Get ML Certification"],
+        beginner: ["Python Basics", "Math & Statistics", "Data Analysis", "Basic ML Concepts"],
+        intermediate: ["TensorFlow/PyTorch", "Deep Learning", "Computer Vision", "NLP Basics"],
+        advanced: ["Advanced Neural Networks", "MLOps", "Research Papers", "Production Systems"]
     },
     {
         title: "Data Scientist",
         description: "Analyze complex data to help organizations make informed decisions.",
         skills: ["Python", "R", "Statistics", "SQL", "Visualization"],
-        roadmap: ["Master Statistics", "Learn Python/R", "Practice SQL", "Create Dashboards", "Build Portfolio"]
+        roadmap: ["Master Statistics", "Learn Python/R", "Practice SQL", "Create Dashboards", "Build Portfolio"],
+        beginner: ["Statistics Fundamentals", "Python/R Programming", "SQL Basics", "Excel Advanced"],
+        intermediate: ["Machine Learning", "Data Visualization", "Feature Engineering", "A/B Testing"],
+        advanced: ["Big Data Technologies", "Advanced Analytics", "Business Intelligence", "Leadership"]
     },
     {
         title: "Cybersecurity Specialist",
         description: "Protect organizations from digital threats and security breaches.",
         skills: ["Network Security", "Ethical Hacking", "Risk Assessment", "Compliance"],
-        roadmap: ["Learn Networking", "Study Security Basics", "Practice Ethical Hacking", "Get Certified", "Join Security Team"]
+        roadmap: ["Learn Networking", "Study Security Basics", "Practice Ethical Hacking", "Get Certified", "Join Security Team"],
+        beginner: ["Network Fundamentals", "Security Basics", "Operating Systems", "Cryptography"],
+        intermediate: ["Penetration Testing", "Digital Forensics", "Risk Assessment", "Incident Response"],
+        advanced: ["Security Architecture", "Governance", "AI in Security", "Team Leadership"]
     },
     {
         title: "Cloud Architect",
         description: "Design and manage cloud computing strategies and infrastructure.",
         skills: ["AWS", "Azure", "Docker", "Kubernetes", "DevOps"],
-        roadmap: ["Learn Cloud Basics", "Get AWS/Azure Certified", "Master Docker", "Practice Kubernetes", "Design Solutions"]
+        roadmap: ["Learn Cloud Basics", "Get AWS/Azure Certified", "Master Docker", "Practice Kubernetes", "Design Solutions"],
+        beginner: ["Cloud Fundamentals", "AWS/Azure Basics", "Virtual Networks", "Storage Solutions"],
+        intermediate: ["Solution Architecture", "Cloud Security", "Cost Optimization", "Migration Strategies"],
+        advanced: ["Enterprise Architecture", "Multi-Cloud Strategy", "Automation", "Leadership"]
     },
     {
         title: "Blockchain Developer",
         description: "Build decentralized applications and blockchain solutions.",
         skills: ["Solidity", "Web3", "Smart Contracts", "Cryptocurrency"],
-        roadmap: ["Understand Blockchain", "Learn Solidity", "Build Smart Contracts", "Create DApps", "Join Blockchain Projects"]
+        roadmap: ["Understand Blockchain", "Learn Solidity", "Build Smart Contracts", "Create DApps", "Join Blockchain Projects"],
+        beginner: ["Blockchain Basics", "Cryptocurrency", "Solidity Programming", "Web3 Concepts"],
+        intermediate: ["Smart Contracts", "DApp Development", "Security Practices", "Testing & Deployment"],
+        advanced: ["Protocol Development", "Layer 2 Solutions", "Cross-chain", "Enterprise Blockchain"]
     },
     {
         title: "Web Developer",
         description: "Create and maintain websites and web applications.",
         skills: ["HTML", "CSS", "JavaScript", "React", "Node.js"],
-        roadmap: ["Master HTML/CSS", "Learn JavaScript", "Study React/Vue", "Backend with Node.js", "Deploy Projects"]
+        roadmap: ["Master HTML/CSS", "Learn JavaScript", "Study React/Vue", "Backend with Node.js", "Deploy Projects"],
+        beginner: ["HTML & CSS", "JavaScript Basics", "Responsive Design", "Git & GitHub"],
+        intermediate: ["React/Vue.js", "Node.js & Express", "Databases", "REST APIs"],
+        advanced: ["TypeScript", "DevOps & CI/CD", "Performance Optimization", "System Design"]
     },
     {
         title: "Mobile App Developer",
         description: "Create mobile applications for iOS and Android platforms.",
         skills: ["Swift", "Kotlin", "React Native", "Flutter", "Mobile UI/UX"],
-        roadmap: ["Choose Platform", "Learn Native Languages", "Study Frameworks", "Build Apps", "Publish to Stores"]
+        roadmap: ["Choose Platform", "Learn Native Languages", "Study Frameworks", "Build Apps", "Publish to Stores"],
+        beginner: ["Programming Basics", "UI/UX Principles", "Development Environment", "First Mobile App"],
+        intermediate: ["Data Storage", "API Integration", "State Management", "Push Notifications"],
+        advanced: ["App Architecture", "Testing & QA", "Analytics", "App Store Optimization"]
     },
     {
         title: "DevOps Engineer",
         description: "Bridge development and operations to streamline software delivery.",
         skills: ["Docker", "Kubernetes", "Jenkins", "Terraform", "Monitoring"],
-        roadmap: ["Learn Linux", "Master Containerization", "Study CI/CD", "Infrastructure as Code", "Monitoring & Logging"]
+        roadmap: ["Learn Linux", "Master Containerization", "Study CI/CD", "Infrastructure as Code", "Monitoring & Logging"],
+        beginner: ["Linux Command Line", "Git & Version Control", "Docker Basics", "Cloud Fundamentals"],
+        intermediate: ["CI/CD Pipelines", "Configuration Management", "Monitoring", "Kubernetes"],
+        advanced: ["Infrastructure as Code", "Security Integration", "Performance Optimization", "Multi-Cloud"]
     },
     {
         title: "Game Developer",
         description: "Design and develop video games for various platforms.",
         skills: ["Unity", "Unreal Engine", "C#", "C++", "Game Design"],
-        roadmap: ["Learn Game Engines", "Study Programming", "Game Design Principles", "Build Games", "Portfolio Development"]
+        roadmap: ["Learn Game Engines", "Study Programming", "Game Design Principles", "Build Games", "Portfolio Development"],
+        beginner: ["C# or C++", "Unity/Unreal Basics", "2D Graphics", "Audio Integration"],
+        intermediate: ["3D Graphics & Physics", "Game Design Patterns", "Multiplayer", "Mobile Optimization"],
+        advanced: ["Game Engine Architecture", "Performance Optimization", "Monetization", "Publishing"]
     },
     {
         title: "Product Manager",
         description: "Guide product development from conception to launch.",
         skills: ["Product Strategy", "User Research", "Analytics", "Agile", "Communication"],
-        roadmap: ["Business Fundamentals", "User Research", "Product Strategy", "Agile Methodologies", "Leadership Skills"]
+        roadmap: ["Business Fundamentals", "User Research", "Product Strategy", "Agile Methodologies", "Leadership Skills"],
+        beginner: ["Business Analysis", "User Research", "Product Frameworks", "Communication"],
+        intermediate: ["Product Analytics", "Roadmap Planning", "Agile & Scrum", "A/B Testing"],
+        advanced: ["Strategic Planning", "Leadership", "Business Innovation", "Go-to-Market"]
     },
     {
         title: "UX/UI Designer",
         description: "Design user interfaces and experiences for digital products.",
         skills: ["Figma", "Adobe XD", "User Research", "Prototyping", "Design Systems"],
-        roadmap: ["Design Principles", "Learn Design Tools", "User Research", "Prototyping", "Build Portfolio"]
+        roadmap: ["Design Principles", "Learn Design Tools", "User Research", "Prototyping", "Build Portfolio"],
+        beginner: ["Design Principles", "Typography & Color", "Figma/Sketch", "UI Basics"],
+        intermediate: ["User Research", "Journey Mapping", "Prototyping", "Accessibility"],
+        advanced: ["Design Strategy", "Team Leadership", "Design Metrics", "Design Systems"]
     },
     {
         title: "Database Administrator",
         description: "Manage and maintain database systems for organizations.",
         skills: ["SQL", "MySQL", "PostgreSQL", "MongoDB", "Database Security"],
-        roadmap: ["SQL Fundamentals", "Database Design", "Administration", "Performance Tuning", "Security & Backup"]
+        roadmap: ["SQL Fundamentals", "Database Design", "Administration", "Performance Tuning", "Security & Backup"],
+        beginner: ["SQL Basics", "Database Concepts", "Basic Administration", "Data Types"],
+        intermediate: ["Query Optimization", "Backup & Recovery", "Security", "Performance Tuning"],
+        advanced: ["High Availability", "Disaster Recovery", "Cloud Databases", "Architecture"]
     },
     {
         title: "Network Engineer",
         description: "Design, implement, and maintain computer networks.",
         skills: ["Networking", "Cisco", "Routing", "Switching", "Network Security"],
-        roadmap: ["Network Basics", "Cisco Certification", "Routing & Switching", "Network Security", "Advanced Protocols"]
+        roadmap: ["Network Basics", "Cisco Certification", "Routing & Switching", "Network Security", "Advanced Protocols"],
+        beginner: ["Network Fundamentals", "OSI Model", "Basic Routing", "Switching Basics"],
+        intermediate: ["Advanced Routing", "VLANs", "Network Security", "Troubleshooting"],
+        advanced: ["Network Design", "SDN", "Automation", "Enterprise Networks"]
     },
     {
         title: "Systems Administrator",
         description: "Maintain and configure computer systems and servers.",
         skills: ["Linux", "Windows Server", "Scripting", "Virtualization", "System Monitoring"],
-        roadmap: ["Operating Systems", "Server Administration", "Scripting", "Virtualization", "Monitoring & Automation"]
+        roadmap: ["Operating Systems", "Server Administration", "Scripting", "Virtualization", "Monitoring & Automation"],
+        beginner: ["Operating Systems", "Command Line", "Basic Administration", "User Management"],
+        intermediate: ["Server Configuration", "Scripting", "Virtualization", "Monitoring"],
+        advanced: ["Automation", "Cloud Integration", "Security Hardening", "Architecture"]
     },
     {
         title: "Quality Assurance Engineer",
         description: "Test software applications to ensure quality and functionality.",
         skills: ["Testing", "Automation", "Selenium", "Test Planning", "Bug Tracking"],
-        roadmap: ["Testing Fundamentals", "Manual Testing", "Automation Tools", "Test Planning", "Performance Testing"]
+        roadmap: ["Testing Fundamentals", "Manual Testing", "Automation Tools", "Test Planning", "Performance Testing"],
+        beginner: ["Testing Basics", "Manual Testing", "Test Cases", "Bug Reporting"],
+        intermediate: ["Selenium", "API Testing", "Performance Testing", "Test Automation"],
+        advanced: ["Test Architecture", "CI/CD Integration", "Quality Metrics", "Leadership"]
     },
     {
         title: "Software Architect",
         description: "Design high-level software system architecture and technical solutions.",
         skills: ["System Design", "Architecture Patterns", "Scalability", "Microservices", "Leadership"],
-        roadmap: ["Software Engineering", "Design Patterns", "System Architecture", "Scalability", "Technical Leadership"]
+        roadmap: ["Software Engineering", "Design Patterns", "System Architecture", "Scalability", "Technical Leadership"],
+        beginner: ["Software Engineering", "Design Patterns", "Code Quality", "Documentation"],
+        intermediate: ["System Design", "Architecture Patterns", "Scalability", "Microservices"],
+        advanced: ["Enterprise Architecture", "Technology Strategy", "Team Leadership", "Innovation"]
     },
     {
         title: "IoT Developer",
         description: "Build Internet of Things solutions connecting devices and sensors.",
         skills: ["Embedded Systems", "Arduino", "Raspberry Pi", "MQTT", "Edge Computing"],
-        roadmap: ["Electronics Basics", "Microcontrollers", "Sensor Integration", "Cloud Connectivity", "IoT Platforms"]
+        roadmap: ["Electronics Basics", "Microcontrollers", "Sensor Integration", "Cloud Connectivity", "IoT Platforms"],
+        beginner: ["Electronics Basics", "Arduino Programming", "Sensors", "Basic Circuits"],
+        intermediate: ["Raspberry Pi", "Communication Protocols", "Cloud Integration", "Data Processing"],
+        advanced: ["Edge Computing", "IoT Security", "Industrial IoT", "Platform Development"]
     },
     {
         title: "AR/VR Developer",
         description: "Create immersive augmented and virtual reality experiences.",
         skills: ["Unity 3D", "Unreal Engine", "C#", "3D Modeling", "Computer Graphics"],
-        roadmap: ["3D Programming", "Game Engines", "VR/AR SDKs", "3D Graphics", "Immersive UX"]
+        roadmap: ["3D Programming", "Game Engines", "VR/AR SDKs", "3D Graphics", "Immersive UX"],
+        beginner: ["3D Programming", "Unity Basics", "VR/AR Concepts", "3D Modeling"],
+        intermediate: ["Advanced Unity", "VR/AR SDKs", "Interaction Design", "Performance Optimization"],
+        advanced: ["Custom Engines", "Advanced Graphics", "Spatial Computing", "Enterprise Solutions"]
     },
     {
         title: "Site Reliability Engineer",
         description: "Ensure system reliability, scalability, and performance at scale.",
         skills: ["Linux", "Monitoring", "Automation", "Incident Response", "Performance Tuning"],
-        roadmap: ["System Administration", "Monitoring Tools", "Automation Scripts", "SLA Management", "Chaos Engineering"]
+        roadmap: ["System Administration", "Monitoring Tools", "Automation Scripts", "SLA Management", "Chaos Engineering"],
+        beginner: ["Linux Administration", "Monitoring Basics", "Scripting", "System Metrics"],
+        intermediate: ["Advanced Monitoring", "Automation", "Incident Response", "Performance Tuning"],
+        advanced: ["Chaos Engineering", "SLA Management", "Capacity Planning", "Architecture"]
     },
     {
         title: "Technical Writer",
         description: "Create clear documentation and technical content for software products.",
         skills: ["Technical Writing", "Documentation Tools", "API Documentation", "Content Strategy", "User Experience"],
-        roadmap: ["Writing Skills", "Technical Knowledge", "Documentation Tools", "Content Management", "User Research"]
+        roadmap: ["Writing Skills", "Technical Knowledge", "Documentation Tools", "Content Management", "User Research"],
+        beginner: ["Writing Fundamentals", "Technical Concepts", "Documentation Tools", "Style Guides"],
+        intermediate: ["API Documentation", "Content Strategy", "User Research", "Information Architecture"],
+        advanced: ["Content Leadership", "Documentation Strategy", "Team Management", "Process Optimization"]
     },
     {
         title: "Business Intelligence Analyst",
         description: "Transform business data into actionable insights and reports.",
         skills: ["SQL", "Power BI", "Tableau", "Data Warehousing", "Business Analysis"],
-        roadmap: ["SQL Mastery", "BI Tools", "Data Modeling", "Dashboard Design", "Business Strategy"]
+        roadmap: ["SQL Mastery", "BI Tools", "Data Modeling", "Dashboard Design", "Business Strategy"],
+        beginner: ["SQL Basics", "Excel Advanced", "Data Analysis", "Basic Reporting"],
+        intermediate: ["BI Tools", "Data Modeling", "Dashboard Design", "ETL Processes"],
+        advanced: ["Data Architecture", "Advanced Analytics", "Business Strategy", "Leadership"]
     },
     {
         title: "Robotics Engineer",
         description: "Design and develop robotic systems for various applications.",
         skills: ["ROS", "Python", "Computer Vision", "Control Systems", "Mechanical Design"],
-        roadmap: ["Programming Basics", "Robotics Fundamentals", "ROS Framework", "Sensor Integration", "AI Integration"]
+        roadmap: ["Programming Basics", "Robotics Fundamentals", "ROS Framework", "Sensor Integration", "AI Integration"],
+        beginner: ["Programming Basics", "Robotics Fundamentals", "Basic Electronics", "Mechanical Concepts"],
+        intermediate: ["ROS Framework", "Sensor Integration", "Computer Vision", "Control Systems"],
+        advanced: ["AI Integration", "Advanced Robotics", "Autonomous Systems", "Research & Development"]
     },
     {
         title: "Security Analyst",
         description: "Monitor and analyze security threats to protect organizational assets.",
         skills: ["SIEM Tools", "Threat Analysis", "Incident Response", "Forensics", "Risk Assessment"],
-        roadmap: ["Security Fundamentals", "SIEM Platforms", "Threat Hunting", "Incident Response", "Security Certifications"]
+        roadmap: ["Security Fundamentals", "SIEM Platforms", "Threat Hunting", "Incident Response", "Security Certifications"],
+        beginner: ["Security Fundamentals", "Network Security", "Basic Tools", "Threat Landscape"],
+        intermediate: ["SIEM Tools", "Threat Analysis", "Incident Response", "Forensics"],
+        advanced: ["Advanced Threat Hunting", "Security Architecture", "Risk Management", "Leadership"]
     },
     {
         title: "Machine Learning Engineer",
         description: "Deploy and maintain machine learning models in production systems.",
         skills: ["MLOps", "Docker", "Kubernetes", "Model Deployment", "Feature Engineering"],
-        roadmap: ["ML Fundamentals", "Model Development", "MLOps Tools", "Production Deployment", "Model Monitoring"]
+        roadmap: ["ML Fundamentals", "Model Development", "MLOps Tools", "Production Deployment", "Model Monitoring"],
+        beginner: ["Python & Libraries", "Statistics", "ML Algorithms", "Data Preprocessing"],
+        intermediate: ["Deep Learning", "TensorFlow/PyTorch", "Computer Vision", "NLP"],
+        advanced: ["MLOps", "Model Optimization", "A/B Testing", "ML System Design"]
     },
     {
         title: "Frontend Engineer",
         description: "Specialize in user interface development and user experience optimization.",
         skills: ["React", "Vue.js", "TypeScript", "CSS Frameworks", "Performance Optimization"],
-        roadmap: ["HTML/CSS/JS", "Modern Frameworks", "State Management", "Testing", "Performance Tuning"]
+        roadmap: ["HTML/CSS/JS", "Modern Frameworks", "State Management", "Testing", "Performance Tuning"],
+        beginner: ["HTML/CSS/JS", "Responsive Design", "Git Basics", "Browser DevTools"],
+        intermediate: ["React/Vue.js", "State Management", "Build Tools", "Testing"],
+        advanced: ["Performance Optimization", "Architecture", "Accessibility", "Leadership"]
     },
     {
         title: "Backend Engineer",
         description: "Focus on server-side development, APIs, and system architecture.",
         skills: ["Node.js", "Python", "Databases", "API Design", "Microservices"],
-        roadmap: ["Server Programming", "Database Design", "API Development", "System Design", "Scalability Patterns"]
+        roadmap: ["Server Programming", "Database Design", "API Development", "System Design", "Scalability Patterns"],
+        beginner: ["Server Programming", "Database Basics", "API Fundamentals", "Version Control"],
+        intermediate: ["Advanced APIs", "Database Optimization", "Caching", "Security"],
+        advanced: ["System Design", "Microservices", "Scalability", "Architecture"]
     }
 ];
 
@@ -316,11 +394,11 @@ function loadCareers() {
             <h3>${career.title}</h3>
             <p>${career.description}</p>
             <div style="margin-top: 1rem;">
-                <strong>Key Skills:</strong>
+                <strong>Learning Levels:</strong>
                 <div style="margin-top: 0.5rem;">
-                    ${career.skills.map(skill => 
-                        `<span class="skill-tag">${skill}</span>`
-                    ).join('')}
+                    <div style="margin-bottom: 0.5rem;"><strong>🌱 Beginner:</strong> ${career.beginner.slice(0,2).join(', ')}</div>
+                    <div style="margin-bottom: 0.5rem;"><strong>⚡ Intermediate:</strong> ${career.intermediate.slice(0,2).join(', ')}</div>
+                    <div><strong>🎯 Advanced:</strong> ${career.advanced.slice(0,2).join(', ')}</div>
                 </div>
             </div>
         </div>
@@ -844,7 +922,7 @@ const careerRoadmaps = window.comprehensiveRoadmaps || {
 };
 
 // Load dynamic roadmap based on selected career
-function loadDynamicRoadmap() {
+function loadDynamicRoadmap(selectedLevel = 'all') {
     const selectedCareer = JSON.parse(localStorage.getItem('selectedCareer') || 'null');
     const roadmapTitle = document.getElementById('roadmapTitle');
     const roadmapDescription = document.getElementById('roadmapDescription');
@@ -853,66 +931,75 @@ function loadDynamicRoadmap() {
     
     if (!roadmapTimeline) return;
     
+    // Setup level filter buttons
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    filterBtns.forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.dataset.level === selectedLevel) {
+            btn.classList.add('active');
+        }
+        btn.addEventListener('click', () => {
+            loadDynamicRoadmap(btn.dataset.level);
+        });
+    });
+    
     if (selectedCareer) {
         // Update header
         if (roadmapTitle) roadmapTitle.textContent = `${selectedCareer.title} Roadmap`;
         if (roadmapDescription) roadmapDescription.textContent = `Your personalized path to becoming a ${selectedCareer.title}`;
         
-        // Use assessment data if available, otherwise use predefined roadmaps
-        const roadmapData = careerRoadmaps[selectedCareer.title];
-        
-        if (roadmapData) {
-            // Load detailed roadmap from careerRoadmaps
-            let motivationalHeader = '';
-            if (roadmapData.emoji && roadmapData.motivationalQuote) {
-                motivationalHeader = `
-                    <div class="motivational-header">
-                        <div class="career-emoji">${roadmapData.emoji}</div>
-                        <div class="motivational-quote">${roadmapData.motivationalQuote}</div>
-                    </div>
-                `;
-            }
-            
-            roadmapTimeline.innerHTML = motivationalHeader + Object.entries(roadmapData)
-                .filter(([key]) => !['emoji', 'motivationalQuote'].includes(key))
-                .map(([level, data], index) => `
-                <div class="roadmap-level">
-                    <h2>${data.title}</h2>
+        // Generate roadmap based on selected level
+        if (selectedLevel === 'all') {
+            // Show all levels
+            roadmapTimeline.innerHTML = `
+                <div class="roadmap-level" data-level="beginner">
+                    <h2>🌱 Beginner Level</h2>
                     <div class="roadmap-steps">
-                        ${data.steps.map(step => `<div class="step">${step}</div>`).join('')}
-                    </div>
-                    <div class="suggested-projects">
-                        <h3>💡 Suggested Projects:</h3>
-                        <ul>
-                            ${data.projects.map(project => `<li>${project}</li>`).join('')}
-                        </ul>
+                        ${selectedCareer.beginner ? selectedCareer.beginner.map((step, index) => 
+                            `<div class="step">${index + 1}. ${step}</div>`
+                        ).join('') : '<div class="step">No beginner roadmap available</div>'}
                     </div>
                 </div>
-            `).join('');
-        } else {
-            // Use assessment roadmap data
-            roadmapTimeline.innerHTML = `
-                <div class="roadmap-level">
-                    <h2>🚀 ${selectedCareer.title} Learning Path</h2>
+                <div class="roadmap-level" data-level="intermediate">
+                    <h2>⚡ Intermediate Level</h2>
                     <div class="roadmap-steps">
-                        ${selectedCareer.roadmap ? selectedCareer.roadmap.map((step, index) => 
+                        ${selectedCareer.intermediate ? selectedCareer.intermediate.map((step, index) => 
                             `<div class="step">${index + 1}. ${step}</div>`
-                        ).join('') : '<div class="step">No roadmap data available</div>'}
+                        ).join('') : '<div class="step">No intermediate roadmap available</div>'}
                     </div>
-                    <div class="suggested-projects">
-                        <h3>🎯 Required Skills:</h3>
-                        <ul>
-                            ${selectedCareer.skills ? selectedCareer.skills.map(skill => 
-                                `<li>${skill}</li>`
-                            ).join('') : '<li>No skills data available</li>'}
-                        </ul>
+                </div>
+                <div class="roadmap-level" data-level="advanced">
+                    <h2>🎯 Advanced Level</h2>
+                    <div class="roadmap-steps">
+                        ${selectedCareer.advanced ? selectedCareer.advanced.map((step, index) => 
+                            `<div class="step">${index + 1}. ${step}</div>`
+                        ).join('') : '<div class="step">No advanced roadmap available</div>'}
+                    </div>
+                </div>
+            `;
+        } else {
+            // Show specific level
+            const levelData = selectedCareer[selectedLevel];
+            const levelTitles = {
+                beginner: '🌱 Beginner Level',
+                intermediate: '⚡ Intermediate Level',
+                advanced: '🎯 Advanced Level'
+            };
+            
+            roadmapTimeline.innerHTML = `
+                <div class="roadmap-level" data-level="${selectedLevel}">
+                    <h2>${levelTitles[selectedLevel]}</h2>
+                    <div class="roadmap-steps">
+                        ${levelData ? levelData.map((step, index) => 
+                            `<div class="step">${index + 1}. ${step}</div>`
+                        ).join('') : `<div class="step">No ${selectedLevel} roadmap available</div>`}
                     </div>
                     <div class="suggested-projects">
                         <h3>📚 Next Steps:</h3>
                         <ul>
-                            <li><a href="courses.html">Find Relevant Courses</a></li>
-                            <li><a href="jobs.html">Explore Job Opportunities</a></li>
-                            <li><a href="assessment.html">Retake Assessment</a></li>
+                            <li><a href="courses.html">Find ${selectedLevel} Courses</a></li>
+                            <li><a href="jobs.html">Explore ${selectedLevel} Jobs</a></li>
+                            ${selectedLevel !== 'advanced' ? `<li><button onclick="loadDynamicRoadmap('${selectedLevel === 'beginner' ? 'intermediate' : 'advanced'}')">Next Level →</button></li>` : ''}
                         </ul>
                     </div>
                 </div>
@@ -940,55 +1027,10 @@ function loadDynamicRoadmap() {
         `;
     }
     
-    // Setup career selector button
-    if (selectCareerBtn) {
-        selectCareerBtn.addEventListener('click', () => {
-            showCareerSelector();
-        });
-    }
+
 }
 
-// Show career selector modal
-function showCareerSelector() {
-    const careers = Object.keys(careerRoadmaps);
-    const modal = document.createElement('div');
-    modal.className = 'career-selector-modal';
-    modal.innerHTML = `
-        <div class="modal-overlay" onclick="this.parentElement.remove()"></div>
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Select Your Career Path</h2>
-                <button class="modal-close" onclick="this.closest('.career-selector-modal').remove()">&times;</button>
-            </div>
-            <div class="career-options">
-                ${careers.map(career => `
-                    <button class="career-option" onclick="selectCareerFromModal('${career}')">
-                        ${career.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}
-                    </button>
-                `).join('')}
-            </div>
-            <div class="modal-footer">
-                <a href="assessment.html" class="btn btn-primary">Take Assessment Instead</a>
-            </div>
-        </div>
-    `;
-    document.body.appendChild(modal);
-}
 
-// Select career from modal
-function selectCareerFromModal(careerKey) {
-    const careerTitle = careerKey.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase());
-    const careerData = {
-        title: careerTitle,
-        description: `Your path to becoming a ${careerTitle}`,
-        skills: getCareerSkills(careerTitle),
-        roadmap: getCareerRoadmap(careerTitle)
-    };
-    
-    localStorage.setItem('selectedCareer', JSON.stringify(careerData));
-    document.querySelector('.career-selector-modal').remove();
-    loadDynamicRoadmap();
-}
 
 // Password visibility toggle
 function togglePassword(inputId, button) {
@@ -1029,7 +1071,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initContactForm();
     initChatbot();
     initLoginModal();
-    loadDynamicRoadmap();
+    loadDynamicRoadmap('all');
     checkUserSession();
 });
 
