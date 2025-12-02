@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auth Test - ChooseWise</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 50px auto; padding: 20px; }
+        .form-group { margin: 15px 0; }
+        input { width: 100%; padding: 10px; margin: 5px 0; }
+        button { padding: 10px 20px; margin: 5px; }
+        .message { padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <h1>Authentication Test</h1>
+    
+    <div class="form-group">
+        <h3>Signup</h3>
+        <input type="email" id="signupEmail" placeholder="Email">
+        <input type="password" id="signupPassword" placeholder="Password">
+        <button onclick="signup()">Sign Up</button>
+        <div id="signupMessage" class="message" style="display:none;"></div>
+    </div>
+    
+    <div class="form-group">
+        <h3>Login</h3>
+        <input type="email" id="loginEmail" placeholder="Email">
+        <input type="password" id="loginPassword" placeholder="Password">
+        <button onclick="login()">Login</button>
+        <div id="loginMessage" class="message" style="display:none;"></div>
+    </div>
+    
+    <div class="form-group">
+        <button onclick="checkProfile()">Check Profile</button>
+        <button onclick="logout()">Logout</button>
+        <div id="profileMessage" class="message" style="display:none;"></div>
+    </div>
+
+    <script>
+        function showMessage(id, message, type) {
+            const el = document.getElementById(id);
+            el.textContent = message;
+            el.className = `message ${type}`;
+            el.style.display = 'block';
+        }
+
+        async function signup() {
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            
+            try {
+                const response = await fetch('http://localhost:3001/signup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                
+                const data = await response.json();
+                const type = response.status === 201 ? 'success' : 'error';
+                showMessage('signupMessage', data.message, type);
+            } catch (error) {
+                showMessage('signupMessage', 'Server error', 'error');
+            }
+        }
+
+        async function login() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            try {
+                const response = await fetch('http://localhost:3001/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ email, password })
+                });
+                
+                const data = await response.json();
+                const type = response.status === 200 ? 'success' : 'error';
+                showMessage('loginMessage', data.message, type);
+            } catch (error) {
+                showMessage('loginMessage', 'Server error', 'error');
+            }
+        }
+
+        async function checkProfile() {
+            try {
+                const response = await fetch('http://localhost:3001/profile', {
+                    credentials: 'include'
+                });
+                
+                const data = await response.json();
+                const type = response.status === 200 ? 'success' : 'error';
+                showMessage('profileMessage', JSON.stringify(data, null, 2), type);
+            } catch (error) {
+                showMessage('profileMessage', 'Server error', 'error');
+            }
+        }
+
+        async function logout() {
+            try {
+                const response = await fetch('http://localhost:3001/logout', {
+                    method: 'POST',
+                    credentials: 'include'
+                });
+                
+                const data = await response.json();
+                showMessage('profileMessage', data.message, 'success');
+            } catch (error) {
+                showMessage('profileMessage', 'Server error', 'error');
+            }
+        }
+    </script>
+</body>
+</html>

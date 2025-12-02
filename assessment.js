@@ -350,6 +350,9 @@ class AssessmentManager {
     showResults() {
         this.calculateScores();
         
+        // Store assessment instance globally for roadmap access
+        window.currentAssessment = this;
+        
         // Sort careers by score
         const sortedCareers = Object.entries(this.scores)
             .sort(([,a], [,b]) => b - a)
@@ -373,7 +376,7 @@ class AssessmentManager {
                     <span class="salary">💰 ${career.salary}</span>
                     <span class="growth">📈 ${career.growth}</span>
                 </div>
-                <button class="btn btn-primary roadmap-btn" onclick="goToRoadmap('${career.title}')">View Roadmap</button>
+
             `;
             recommendationsGrid.appendChild(recommendationCard);
         });
@@ -403,25 +406,51 @@ class AssessmentManager {
 
 // Function to navigate to roadmap with selected career
 function goToRoadmap(careerTitle) {
-    // Create career object for roadmap
-    const careerData = {
-        title: careerTitle,
-        description: careerPaths[Object.keys(careerPaths).find(key => careerPaths[key].title === careerTitle)]?.description || '',
-        skills: getCareerSkills(careerTitle),
-        roadmap: getCareerRoadmap(careerTitle),
-        fromAssessment: true // Flag to indicate this came from assessment
+    // Map assessment career titles to roadmap career names
+    const careerMapping = {
+        'AI Engineer': 'AI Engineer',
+        'Data Scientist': 'Data Scientist', 
+        'Web Developer': 'Web Developer',
+        'Cybersecurity Specialist': 'Cybersecurity Specialist',
+        'Cloud Architect': 'Cloud Architect',
+        'Blockchain Developer': 'Blockchain Developer'
     };
     
-    // Store selected career in localStorage
-    localStorage.setItem('selectedCareer', JSON.stringify(careerData));
+    const mappedCareer = careerMapping[careerTitle] || careerTitle;
     
-    // Track roadmap generation
-    if (window.ProgressTracker) {
-        ProgressTracker.trackRoadmapGenerated(careerTitle);
+    // Navigate to roadmap page with career parameter
+    window.location.href = `roadmap.html?career=${encodeURIComponent(mappedCareer)}`;
+}
+
+// Function to view all recommended roadmaps
+function viewAllRoadmaps() {
+    // Get top 3 career recommendations from current assessment
+    const sortedCareers = Object.entries(window.currentAssessment?.scores || {})
+        .sort(([,a], [,b]) => b - a)
+        .slice(0, 3);
+    
+    if (sortedCareers.length === 0) {
+        window.location.href = 'roadmap.html';
+        return;
     }
     
-    // Navigate to roadmap page
-    window.location.href = 'roadmap.html';
+    // Map assessment career keys to roadmap data keys
+    const careerKeyMapping = {
+        'ai-engineer': 'AI Engineer',
+        'data-scientist': 'Data Scientist',
+        'web-developer': 'Web Developer',
+        'cybersecurity': 'Cybersecurity Specialist',
+        'cloud-architect': 'Cloud Architect',
+        'blockchain': 'Blockchain Developer'
+    };
+    
+    // Store recommended careers for roadmap page
+    const recommendedCareers = sortedCareers.map(([careerKey]) => {
+        return careerKeyMapping[careerKey] || careerKey;
+    });
+    
+    localStorage.setItem('recommendedCareers', JSON.stringify(recommendedCareers));
+    window.location.href = 'roadmap.html?view=recommendations';
 }
 
 // Get skills for career

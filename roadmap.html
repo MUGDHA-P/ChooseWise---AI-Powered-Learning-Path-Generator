@@ -6,6 +6,8 @@
     <title>Learning Roadmap - ChooseWise</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="roadmap-styles.css">
+    <script src="visitor-tracker.js"></script>
+    <script src="auth-check.js"></script>
 </head>
 <body>
     <nav class="navbar">
@@ -56,6 +58,239 @@
     </footer>
 
     <script src="roadmapData.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const career = urlParams.get('career');
+            const view = urlParams.get('view');
+            
+            if (view === 'recommendations') {
+                displayRecommendedRoadmaps();
+            } else if (career && comprehensiveRoadmaps[career]) {
+                displayRoadmap(career);
+            } else {
+                displayCareerSelector();
+            }
+            
+            // Filter functionality
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const level = this.dataset.level;
+                    filterRoadmapByLevel(level);
+                });
+            });
+        });
+        
+        function displayRecommendedRoadmaps() {
+            const recommendedCareers = JSON.parse(localStorage.getItem('recommendedCareers') || '[]');
+            
+            if (recommendedCareers.length === 0) {
+                displayCareerSelector();
+                return;
+            }
+            
+            document.getElementById('roadmapTitle').textContent = 'Your Recommended Career Roadmaps';
+            document.getElementById('roadmapDescription').textContent = 'Complete learning paths for your top career matches';
+            
+            const timeline = document.getElementById('roadmapTimeline');
+            let roadmapHTML = '';
+            
+            recommendedCareers.forEach(careerTitle => {
+                const roadmap = comprehensiveRoadmaps[careerTitle];
+                if (!roadmap) return;
+                
+                roadmapHTML += `
+                    <div class="career-roadmap-section" style="margin-bottom: 3rem; border: 2px solid var(--primary-color); border-radius: 1rem; padding: 2rem;">
+                        <div class="career-header" style="text-align: center; margin-bottom: 2rem;">
+                            <h2>${roadmap.emoji} ${careerTitle}</h2>
+                            <p style="color: var(--secondary-color); font-style: italic;">${roadmap.motivationalQuote}</p>
+                        </div>
+                        
+                        <div class="roadmap-step" data-level="beginner">
+                            <div class="step-header">
+                                <h3>${roadmap.beginner.title}</h3>
+                                <span class="duration">${roadmap.beginner.duration}</span>
+                            </div>
+                            <div class="step-content">
+                                <div class="skills-list">
+                                    <h4>📚 Learning Path:</h4>
+                                    <ul>${roadmap.beginner.steps.map(step => `<li>${step}</li>`).join('')}</ul>
+                                </div>
+                                <div class="courses-list">
+                                    <h4>🎓 Recommended Courses:</h4>
+                                    <ul>${roadmap.beginner.courses.map(course => `<li>${course}</li>`).join('')}</ul>
+                                </div>
+                                <div class="projects-list">
+                                    <h4>🚀 Practice Projects:</h4>
+                                    <ul>${roadmap.beginner.projects.map(project => `<li>${project}</li>`).join('')}</ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="roadmap-step" data-level="intermediate">
+                            <div class="step-header">
+                                <h3>${roadmap.intermediate.title}</h3>
+                                <span class="duration">${roadmap.intermediate.duration}</span>
+                            </div>
+                            <div class="step-content">
+                                <div class="skills-list">
+                                    <h4>📚 Learning Path:</h4>
+                                    <ul>${roadmap.intermediate.steps.map(step => `<li>${step}</li>`).join('')}</ul>
+                                </div>
+                                <div class="courses-list">
+                                    <h4>🎓 Recommended Courses:</h4>
+                                    <ul>${roadmap.intermediate.courses.map(course => `<li>${course}</li>`).join('')}</ul>
+                                </div>
+                                <div class="projects-list">
+                                    <h4>🚀 Practice Projects:</h4>
+                                    <ul>${roadmap.intermediate.projects.map(project => `<li>${project}</li>`).join('')}</ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="roadmap-step" data-level="advanced">
+                            <div class="step-header">
+                                <h3>${roadmap.advanced.title}</h3>
+                                <span class="duration">${roadmap.advanced.duration}</span>
+                            </div>
+                            <div class="step-content">
+                                <div class="skills-list">
+                                    <h4>📚 Learning Path:</h4>
+                                    <ul>${roadmap.advanced.steps.map(step => `<li>${step}</li>`).join('')}</ul>
+                                </div>
+                                <div class="courses-list">
+                                    <h4>🎓 Recommended Courses:</h4>
+                                    <ul>${roadmap.advanced.courses.map(course => `<li>${course}</li>`).join('')}</ul>
+                                </div>
+                                <div class="projects-list">
+                                    <h4>🚀 Practice Projects:</h4>
+                                    <ul>${roadmap.advanced.projects.map(project => `<li>${project}</li>`).join('')}</ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            timeline.innerHTML = roadmapHTML + `
+                <div style="text-align: center; margin-top: 2rem;">
+                    <button class="btn btn-secondary" onclick="window.location.href='roadmap.html'">← Choose Different Career</button>
+                </div>
+            `;
+        }
+        
+        function displayCareerSelector() {
+            document.getElementById('roadmapTitle').textContent = 'Choose Your Career Path';
+            document.getElementById('roadmapDescription').textContent = 'Select a career to see your personalized learning roadmap';
+            
+            const timeline = document.getElementById('roadmapTimeline');
+            timeline.innerHTML = `
+                <div class="career-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; margin-top: 2rem;">
+                    ${Object.keys(comprehensiveRoadmaps).map(career => `
+                        <div class="career-card" style="background: var(--card-background); border: 1px solid var(--border-color); border-radius: 0.5rem; padding: 1.5rem; cursor: pointer;" onclick="selectCareer('${career}')">
+                            <h3>${comprehensiveRoadmaps[career].emoji} ${career}</h3>
+                            <p style="color: var(--secondary-color); margin: 0.5rem 0;">${comprehensiveRoadmaps[career].motivationalQuote}</p>
+                            <button class="btn btn-primary" style="margin-top: 1rem;">View Roadmap</button>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+        
+        function selectCareer(career) {
+            window.location.href = `roadmap.html?career=${encodeURIComponent(career)}`;
+        }
+        
+        function displayRoadmap(career) {
+            const roadmap = comprehensiveRoadmaps[career];
+            document.getElementById('roadmapTitle').textContent = `${roadmap.emoji} ${career} Roadmap`;
+            document.getElementById('roadmapDescription').textContent = roadmap.motivationalQuote;
+            
+            const timeline = document.getElementById('roadmapTimeline');
+            timeline.innerHTML = `
+                <div class="roadmap-step" data-level="beginner">
+                    <div class="step-header">
+                        <h3>${roadmap.beginner.title}</h3>
+                        <span class="duration">${roadmap.beginner.duration}</span>
+                    </div>
+                    <div class="step-content">
+                        <div class="skills-list">
+                            <h4>📚 Learning Path:</h4>
+                            <ul>${roadmap.beginner.steps.map(step => `<li>${step}</li>`).join('')}</ul>
+                        </div>
+                        <div class="courses-list">
+                            <h4>🎓 Recommended Courses:</h4>
+                            <ul>${roadmap.beginner.courses.map(course => `<li>${course}</li>`).join('')}</ul>
+                        </div>
+                        <div class="projects-list">
+                            <h4>🚀 Practice Projects:</h4>
+                            <ul>${roadmap.beginner.projects.map(project => `<li>${project}</li>`).join('')}</ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="roadmap-step" data-level="intermediate">
+                    <div class="step-header">
+                        <h3>${roadmap.intermediate.title}</h3>
+                        <span class="duration">${roadmap.intermediate.duration}</span>
+                    </div>
+                    <div class="step-content">
+                        <div class="skills-list">
+                            <h4>📚 Learning Path:</h4>
+                            <ul>${roadmap.intermediate.steps.map(step => `<li>${step}</li>`).join('')}</ul>
+                        </div>
+                        <div class="courses-list">
+                            <h4>🎓 Recommended Courses:</h4>
+                            <ul>${roadmap.intermediate.courses.map(course => `<li>${course}</li>`).join('')}</ul>
+                        </div>
+                        <div class="projects-list">
+                            <h4>🚀 Practice Projects:</h4>
+                            <ul>${roadmap.intermediate.projects.map(project => `<li>${project}</li>`).join('')}</ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="roadmap-step" data-level="advanced">
+                    <div class="step-header">
+                        <h3>${roadmap.advanced.title}</h3>
+                        <span class="duration">${roadmap.advanced.duration}</span>
+                    </div>
+                    <div class="step-content">
+                        <div class="skills-list">
+                            <h4>📚 Learning Path:</h4>
+                            <ul>${roadmap.advanced.steps.map(step => `<li>${step}</li>`).join('')}</ul>
+                        </div>
+                        <div class="courses-list">
+                            <h4>🎓 Recommended Courses:</h4>
+                            <ul>${roadmap.advanced.courses.map(course => `<li>${course}</li>`).join('')}</ul>
+                        </div>
+                        <div class="projects-list">
+                            <h4>🚀 Practice Projects:</h4>
+                            <ul>${roadmap.advanced.projects.map(project => `<li>${project}</li>`).join('')}</ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 2rem;">
+                    <button class="btn btn-secondary" onclick="window.location.href='roadmap.html'">← Choose Different Career</button>
+                </div>
+            `;
+        }
+        
+        function filterRoadmapByLevel(level) {
+            const steps = document.querySelectorAll('.roadmap-step');
+            steps.forEach(step => {
+                if (level === 'all' || step.dataset.level === level) {
+                    step.style.display = 'block';
+                } else {
+                    step.style.display = 'none';
+                }
+            });
+        }
+    </script>
     <script src="script.js"></script>
 </body>
 </html>

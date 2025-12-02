@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Owner Dashboard - ChooseWise</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">ChooseWise - Owner Dashboard</div>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle">🌙</button>
+                <button class="btn btn-secondary" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <section class="features">
+            <div class="container">
+                <div class="dashboard-header">
+                    <h1>Analytics Dashboard</h1>
+                    <p>Real-time visitor and user statistics</p>
+                    <button class="btn btn-secondary" onclick="resetDashboardData()" style="margin-top: 1rem;">🔄 Reset All Data</button>
+                </div>
+
+                <div class="dashboard-stats">
+                    <div class="stat-card">
+                        <h3>Total Visitors</h3>
+                        <div class="stat-number" id="totalVisitors">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Registered Users</h3>
+                        <div class="stat-number" id="registeredUsers">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Today's Visits</h3>
+                        <div class="stat-number" id="todayVisits">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Active Sessions</h3>
+                        <div class="stat-number" id="activeSessions">0</div>
+                    </div>
+                </div>
+
+                <div class="dashboard-tables">
+                    <div class="table-section">
+                        <h3>Recent Visitors</h3>
+                        <div class="table-container">
+                            <table id="visitorsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Time</th>
+                                        <th>Page</th>
+                                        <th>User Agent</th>
+                                        <th>IP</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="table-section">
+                        <h3>Registered Users</h3>
+                        <div class="table-container">
+                            <table id="usersTable">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Registration Date</th>
+                                        <th>Last Login</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <style>
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            margin: 0 0 0.5rem 0;
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+        }
+
+        .stat-card .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .dashboard-tables {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .table-section h3 {
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        .table-container {
+            background: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background: var(--background-color);
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        td {
+            color: var(--secondary-color);
+        }
+
+        tr:hover {
+            background: var(--background-color);
+        }
+    </style>
+
+    <script src="script.js"></script>
+    <script>
+        // Real-time visitor notification
+        let lastVisitCount = 0;
+        
+        function showVisitorNotification(visit) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #4CAF50;
+                color: white;
+                padding: 15px;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                z-index: 10000;
+                max-width: 300px;
+                animation: slideIn 0.3s ease;
+            `;
+            notification.innerHTML = `
+                <div style="font-weight: bold; margin-bottom: 5px;">🔔 New Visitor!</div>
+                <div style="font-size: 0.9em;">Page: ${visit.page}</div>
+                <div style="font-size: 0.8em; opacity: 0.9;">${new Date(visit.timestamp).toLocaleTimeString()}</div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 4000);
+        }
+        
+        // Dashboard functionality
+        function loadDashboardData() {
+            // Load data
+            const visitors = JSON.parse(localStorage.getItem('siteVisitors') || '[]');
+            const users = JSON.parse(localStorage.getItem('choosewise_users') || '[]');
+            
+            // Update stats
+            document.getElementById('totalVisitors').textContent = visitors.length;
+            document.getElementById('registeredUsers').textContent = users.length;
+            
+            const today = new Date().toDateString();
+            const todayVisits = visitors.filter(v => new Date(v.timestamp).toDateString() === today).length;
+            document.getElementById('todayVisits').textContent = todayVisits;
+            
+            const activeSessions = visitors.filter(v => Date.now() - new Date(v.timestamp).getTime() < 30 * 60 * 1000).length;
+            document.getElementById('activeSessions').textContent = activeSessions;
+            
+            // Populate visitors table
+            const visitorsTable = document.getElementById('visitorsTable').getElementsByTagName('tbody')[0];
+            visitorsTable.innerHTML = '';
+            visitors.slice(-20).reverse().forEach(visitor => {
+                const row = visitorsTable.insertRow();
+                row.insertCell(0).textContent = new Date(visitor.timestamp).toLocaleString();
+                row.insertCell(1).textContent = visitor.page || 'Unknown';
+                row.insertCell(2).textContent = (visitor.userAgent || 'Unknown').substring(0, 50) + '...';
+                row.insertCell(3).textContent = visitor.ip || 'Unknown';
+            });
+            
+            // Populate users table
+            const usersTable = document.getElementById('usersTable').getElementsByTagName('tbody')[0];
+            usersTable.innerHTML = '';
+            
+            if (users.length === 0) {
+                const row = usersTable.insertRow();
+                row.insertCell(0).textContent = 'No users yet';
+                row.insertCell(1).textContent = 'Register via auth.html';
+                row.insertCell(2).textContent = '-';
+                row.insertCell(3).textContent = '-';
+            } else {
+                users.forEach(user => {
+                    const row = usersTable.insertRow();
+                    row.insertCell(0).textContent = user.name || 'Unknown';
+                    row.insertCell(1).textContent = user.email || 'Unknown';
+                    row.insertCell(2).textContent = user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'Unknown';
+                    row.insertCell(3).textContent = 'Never';
+                });
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('ownerLoggedIn');
+            window.location.href = 'index.html';
+        }
+        
+        function resetDashboardData() {
+            if (confirm('Are you sure you want to reset all data? This will clear all users, visitors, and events.')) {
+                localStorage.removeItem('choosewise_users');
+                localStorage.removeItem('siteVisitors');
+                localStorage.removeItem('userEvents');
+                localStorage.removeItem('registeredUsers');
+                alert('All data has been reset. Dashboard will now start from 0.');
+                loadDashboardData();
+            }
+        }
+        
+        window.resetDashboardData = resetDashboardData;
+
+        // Check if owner is logged in
+        if (!localStorage.getItem('ownerLoggedIn')) {
+            const password = prompt('Enter owner password:');
+            if (password !== 'choosewise2025') {
+                alert('Access denied');
+                window.location.href = 'index.html';
+            } else {
+                localStorage.setItem('ownerLoggedIn', 'true');
+            }
+        }
+
+        // Monitor for new visits
+        function monitorVisits() {
+            const visitors = JSON.parse(localStorage.getItem('siteVisitors') || '[]');
+            if (visitors.length > lastVisitCount) {
+                const newVisits = visitors.slice(lastVisitCount);
+                newVisits.forEach(visit => showVisitorNotification(visit));
+                lastVisitCount = visitors.length;
+            }
+        }
+        
+        // Load data on page load
+        loadDashboardData();
+        lastVisitCount = JSON.parse(localStorage.getItem('siteVisitors') || '[]').length;
+        
+        // Refresh data every 5 seconds for real-time updates
+        setInterval(() => {
+            loadDashboardData();
+            monitorVisits();
+        }, 5000);
+    </script>
+    
+    <style>
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+    </style>
+</body>
+</html>

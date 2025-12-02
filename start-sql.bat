@@ -1,0 +1,6 @@
+@echo off
+echo Installing SQLite dependency...
+call npm install
+
+echo Starting ChooseWise with SQLite Database...
+node sql-server.js

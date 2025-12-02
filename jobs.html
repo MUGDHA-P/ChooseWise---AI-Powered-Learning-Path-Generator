@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jobs - ChooseWise</title>
+    <title>AI Resume Analyzer + Job Matcher - ChooseWise</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="visitor-tracker.js"></script>
+    <script src="auth-check.js"></script>
 </head>
 <body>
     <nav class="navbar">
@@ -25,28 +27,79 @@
     <main class="main-content">
         <section class="page-header">
             <div class="container">
-                <h1>Job Opportunities</h1>
-                <p>Discover tech job openings from top companies</p>
+                <h1>🎯 AI Resume Analyzer + Job Matcher</h1>
+                <p>Upload your resume for intelligent parsing, skill extraction, and personalized job matching with 0-100% compatibility scores</p>
             </div>
         </section>
 
         <section class="resume-upload">
             <div class="container">
                 <div class="upload-card">
-                    <h2>📄 Upload Your Resume</h2>
-                    <p>Get personalized job recommendations based on your skills and experience</p>
+                    <h2>🤖 AI Resume Analyzer + Job Matcher</h2>
+                    <p>Upload your resume for intelligent parsing, skill extraction, and personalized job matching</p>
+                    
                     <div class="upload-area" id="uploadArea">
-                        <input type="file" id="resumeFile" accept=".pdf,.doc,.docx" hidden>
+                        <input type="file" id="resumeFile" accept=".pdf,.doc,.docx,.txt,.jpg,.png" hidden>
                         <div class="upload-content">
-                            <div class="upload-icon">📁</div>
+                            <div class="upload-icon">📄</div>
                             <p>Drag & drop your resume here or <span class="upload-link">browse files</span></p>
-                            <small>Supports PDF, DOC, DOCX (Max 5MB)</small>
+                            <small>Supports PDF, DOC, DOCX, TXT, JPG, PNG (Max 10MB)</small>
+                            <div style="margin-top: 1rem;">
+                                <!-- <button class="btn btn-secondary" id="testResumeBtn">Try Sample Resume</button> -->
+                            </div>
                         </div>
                     </div>
+                    
                     <div class="resume-analysis" id="resumeAnalysis" style="display: none;">
-                        <h3>Resume Analysis</h3>
-                        <div class="skills-detected" id="skillsDetected"></div>
-                        <button class="btn btn-primary" id="findMatchingJobs">Find Matching Jobs</button>
+                        <div class="analysis-tabs">
+                            <button class="tab-btn active" data-tab="parsed">📋 Parsed Resume</button>
+                            <button class="tab-btn" data-tab="skills">🔧 Skills Analysis</button>
+                            <button class="tab-btn" data-tab="matches">🎯 Job Matches</button>
+                            <button class="tab-btn" data-tab="suggestions">💡 Improvements</button>
+                        </div>
+                        
+                        <div class="tab-content" id="parsedTab">
+                            <h3>Structured Resume Data</h3>
+                            <div class="parsed-resume" id="parsedResume"></div>
+                            <button class="btn btn-secondary" id="editResume">Edit Resume Data</button>
+                        </div>
+                        
+                        <div class="tab-content" id="skillsTab" style="display: none;">
+                            <h3>Skills & Experience Analysis</h3>
+                            <div class="skills-breakdown" id="skillsBreakdown"></div>
+                        </div>
+                        
+                        <div class="tab-content" id="matchesTab" style="display: none;">
+                            <h3>Ranked Job Opportunities</h3>
+                            <div class="match-filters">
+                                <select id="locationFilter">
+                                    <option value="">All Locations</option>
+                                    <option value="remote">Remote</option>
+                                    <option value="bangalore">Bangalore</option>
+                                    <option value="mumbai">Mumbai</option>
+                                    <option value="delhi">Delhi</option>
+                                </select>
+                                <select id="seniorityFilter">
+                                    <option value="">All Levels</option>
+                                    <option value="junior">Junior</option>
+                                    <option value="mid">Mid-Level</option>
+                                    <option value="senior">Senior</option>
+                                    <option value="lead">Lead</option>
+                                </select>
+                                <input type="range" id="scoreThreshold" min="0" max="100" value="50">
+                                <span>Min Score: <span id="scoreValue">50</span>%</span>
+                            </div>
+                            <div class="job-matches" id="jobMatches"></div>
+                        </div>
+                        
+                        <div class="tab-content" id="suggestionsTab" style="display: none;">
+                            <h3>Resume Improvement Suggestions</h3>
+                            <div class="suggestions-list" id="suggestionsList"></div>
+                        </div>
+                        
+                        <div class="analysis-actions">
+                            <button class="btn btn-primary" id="downloadReport">📊 Download Report</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -54,20 +107,22 @@
 
         <section class="jobs-section">
             <div class="container">
-                <div class="jobs-filter">
-                    <h2>Job Opportunities</h2>
-                    <div class="filter-options">
-                        <button class="filter-btn active" data-filter="all">All Jobs</button>
-                        <button class="filter-btn" data-filter="matched">Resume Matched</button>
-                        <button class="filter-btn" data-filter="internship">🎓 Internships</button>
-                        <button class="filter-btn" data-filter="frontend">Frontend</button>
-                        <button class="filter-btn" data-filter="backend">Backend</button>
-                        <button class="filter-btn" data-filter="fullstack">Full Stack</button>
-                        <button class="filter-btn" data-filter="data">Data Science</button>
+                <div class="jobs-stats">
+                    <div class="stat-card">
+                        <h3>👥 Registered Users</h3>
+                        <div class="stat-number" id="registeredCount">0</div>
+                        <p>Total accounts created</p>
                     </div>
-                </div>
-                <div class="jobs-list" id="jobsList">
-                    <!-- Job cards will be loaded by JavaScript -->
+                    <div class="stat-card">
+                        <h3>💼 Active Jobs</h3>
+                        <div class="stat-number">150+</div>
+                        <p>Live opportunities</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>🏢 Companies</h3>
+                        <div class="stat-number">50+</div>
+                        <p>Hiring partners</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -75,11 +130,417 @@
 
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2024 ChooseWise. All rights reserved.</p>
+            <p>&copy; 2025 ChooseWise. All rights reserved.</p>
         </div>
     </footer>
 
     <script src="script.js"></script>
-    <script src="resume-analyzer.js"></script>
+    <script src="simple-resume-analyzer.js"></script>
+    
+    <style>
+        .upload-card {
+            background: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .analysis-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 1.5rem;
+        }
+        
+        .tab-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            background: none;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        
+        .tab-btn.active {
+            border-bottom-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .parsed-resume {
+            background: #0e0e0f;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .resume-section {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .resume-section h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .skills-breakdown {
+            display: grid;
+            gap: 1rem;
+        }
+        
+        .skill-category {
+            background: #000000;
+            padding: 1rem;
+            border-radius: 0.5rem;
+        }
+        
+        .skill-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .skill-level {
+            background: var(--primary-color);
+            color: rgb(6, 6, 6);
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.8rem;
+        }
+        
+        .match-filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .match-filters select, .match-filters input {
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.25rem;
+        }
+        
+        .job-match-card {
+            background: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+        
+        .match-score {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--primary-color);
+            color: rgb(15, 14, 14);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-weight: bold;
+        }
+        
+        .match-details {
+            margin-top: 1rem;
+        }
+        
+        .matched-skills, .missing-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 0.5rem 0;
+        }
+        
+        .matched-skill {
+            background: #121212;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 1 rem;
+        }
+        
+        .missing-skill {
+            background: #111111;
+            color: #721c24;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.8rem;
+        }
+        
+        .rationale {
+            background: #131313;
+            padding: 1rem;
+            border-radius: 0.25rem;
+            margin-top: 1rem;
+            font-style: italic;
+        }
+        
+        .suggestions-list {
+            display: grid;
+            gap: 1rem;
+        }
+        
+        .suggestion-card {
+            background: #6c757d;
+            color: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .analysis-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            justify-content: center;
+        }
+        
+        .upload-area {
+            border: 2px dashed #ddd;
+            border-radius: 0.5rem;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+        
+        .upload-area:hover {
+            border-color: var(--primary-color);
+        }
+        
+        .upload-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .upload-link {
+            color: var(--primary-color);
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--secondary-color);
+        }
+        
+        .error {
+            background: rgb(19, 18, 18);
+            color: #c33;
+            padding: 1rem;
+            border-radius: 0.25rem;
+            margin: 1rem 0;
+            text-align: center;
+        }
+        
+        .skill-tag {
+            background: var(--primary-color);
+            color: rgb(21, 20, 20);
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.85rem;
+            text-transform: capitalize;
+            margin: 0.25rem;
+            display: inline-block;
+        }
+        
+        .jobs-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .stat-card h3 {
+            margin: 0 0 0.5rem 0;
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+        
+        .stat-card .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 0.5rem 0;
+        }
+        
+        .stat-card p {
+            margin: 0;
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+        }
+    </style>
+    
+    <script>
+        // Enhanced job dataset with detailed matching criteria
+        const jobsData = [
+            {
+                id: "J-101",
+                title: "Senior Frontend Engineer",
+                company: "TechCorp",
+                location: "Bengaluru, India",
+                remote_flag: true,
+                seniority: "senior",
+                salary_range: "₹15-25 LPA",
+                required_skills: [
+                    {skill: "React", weight: 1.0, mandatory: true},
+                    {skill: "JavaScript", weight: 0.9, mandatory: true},
+                    {skill: "TypeScript", weight: 0.8, mandatory: false}
+                ],
+                preferred_skills: [
+                    {skill: "Next.js", weight: 0.6},
+                    {skill: "GraphQL", weight: 0.5},
+                    {skill: "Redux", weight: 0.4}
+                ],
+                description: "Build responsive UIs with React. Lead frontend architecture decisions. Mentor junior developers.",
+                posted_date: "2024-01-15",
+                category: "frontend"
+            },
+            {
+                id: "J-102",
+                title: "Backend Engineer",
+                company: "StartupXYZ",
+                location: "Mumbai, India",
+                remote_flag: false,
+                seniority: "mid",
+                salary_range: "₹12-18 LPA",
+                required_skills: [
+                    {skill: "Node.js", weight: 1.0, mandatory: true},
+                    {skill: "Express", weight: 0.8, mandatory: true},
+                    {skill: "MongoDB", weight: 0.7, mandatory: false}
+                ],
+                preferred_skills: [
+                    {skill: "Docker", weight: 0.6},
+                    {skill: "AWS", weight: 0.5},
+                    {skill: "Redis", weight: 0.4}
+                ],
+                description: "Design and implement scalable backend services. Work with microservices architecture.",
+                posted_date: "2024-01-14",
+                category: "backend"
+            },
+            {
+                id: "J-103",
+                title: "Full Stack Developer",
+                company: "InnovateLabs",
+                location: "Remote",
+                remote_flag: true,
+                seniority: "mid",
+                salary_range: "₹14-20 LPA",
+                required_skills: [
+                    {skill: "React", weight: 0.9, mandatory: true},
+                    {skill: "Node.js", weight: 0.9, mandatory: true},
+                    {skill: "JavaScript", weight: 0.8, mandatory: true}
+                ],
+                preferred_skills: [
+                    {skill: "Python", weight: 0.6},
+                    {skill: "PostgreSQL", weight: 0.5},
+                    {skill: "Docker", weight: 0.4}
+                ],
+                description: "End-to-end development of web applications. Work across the full technology stack.",
+                posted_date: "2024-01-13",
+                category: "fullstack"
+            },
+            {
+                id: "J-104",
+                title: "Data Scientist",
+                company: "DataTech",
+                location: "Hyderabad, India",
+                remote_flag: true,
+                seniority: "senior",
+                salary_range: "₹18-28 LPA",
+                required_skills: [
+                    {skill: "Python", weight: 1.0, mandatory: true},
+                    {skill: "Machine Learning", weight: 0.9, mandatory: true},
+                    {skill: "SQL", weight: 0.8, mandatory: true}
+                ],
+                preferred_skills: [
+                    {skill: "TensorFlow", weight: 0.7},
+                    {skill: "PyTorch", weight: 0.6},
+                    {skill: "Pandas", weight: 0.5}
+                ],
+                description: "Build ML models for business insights. Work with large datasets and statistical analysis.",
+                posted_date: "2024-01-12",
+                category: "data"
+            },
+            {
+                id: "J-105",
+                title: "Frontend Developer Intern",
+                company: "WebStudio",
+                location: "Delhi, India",
+                remote_flag: false,
+                seniority: "junior",
+                salary_range: "₹20-30k/month",
+                required_skills: [
+                    {skill: "HTML", weight: 1.0, mandatory: true},
+                    {skill: "CSS", weight: 1.0, mandatory: true},
+                    {skill: "JavaScript", weight: 0.8, mandatory: true}
+                ],
+                preferred_skills: [
+                    {skill: "React", weight: 0.6},
+                    {skill: "Git", weight: 0.4}
+                ],
+                description: "Learn frontend development with modern frameworks. Great opportunity for beginners.",
+                posted_date: "2024-01-11",
+                category: "internship"
+            },
+            {
+                id: "J-106",
+                title: "DevOps Engineer",
+                company: "CloudTech",
+                location: "Pune, India",
+                remote_flag: true,
+                seniority: "mid",
+                salary_range: "₹16-22 LPA",
+                required_skills: [
+                    {skill: "Docker", weight: 1.0, mandatory: true},
+                    {skill: "Kubernetes", weight: 0.9, mandatory: true},
+                    {skill: "AWS", weight: 0.8, mandatory: false}
+                ],
+                preferred_skills: [
+                    {skill: "Terraform", weight: 0.7},
+                    {skill: "Jenkins", weight: 0.6},
+                    {skill: "Linux", weight: 0.5}
+                ],
+                description: "Manage cloud infrastructure and deployment pipelines. Automate development workflows.",
+                posted_date: "2024-01-10",
+                category: "devops"
+            }
+        ];
+        
+        // Update registered users count
+        function updateRegisteredCount() {
+            const users = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+            const events = JSON.parse(localStorage.getItem('userEvents') || '[]');
+            
+            const allUsers = new Set();
+            users.forEach(user => allUsers.add(user.email));
+            events.forEach(event => {
+                if (event.type === 'registration') {
+                    allUsers.add(event.email);
+                }
+            });
+            
+            document.getElementById('registeredCount').textContent = allUsers.size;
+        }
+        
+        document.addEventListener('DOMContentLoaded', updateRegisteredCount);
+        setInterval(updateRegisteredCount, 5000);
+    </script>
 </body>
 </html>

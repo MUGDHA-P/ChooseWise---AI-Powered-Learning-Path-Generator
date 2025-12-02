@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Viewer - ChooseWise | All Tables</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .table-container { 
+            margin: 20px 0; 
+            overflow-x: auto; 
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            background: #fafafa;
+        }
+        .table-container h2 {
+            margin-top: 0;
+            color: #333;
+            font-size: 1.2em;
+        }
+        .table-container p {
+            margin: 5px 0 15px 0;
+            color: #666;
+            font-size: 0.9em;
+            font-style: italic;
+        }
+        table { 
+            width: 100%; 
+            border-collapse: collapse;
+            background: white;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        th, td { 
+            padding: 10px; 
+            border: 1px solid #ddd; 
+            text-align: left;
+            font-size: 0.9em;
+        }
+        th { 
+            background-color: #f8f9fa; 
+            font-weight: 600;
+            color: #495057;
+        }
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        tr:hover {
+            background-color: #e9ecef;
+        }
+        .refresh-btn { 
+            margin: 20px 0;
+            padding: 10px 20px;
+            font-size: 1em;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .db-overview {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .db-overview h2 {
+            margin-top: 0;
+            text-align: center;
+        }
+        .overview-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+        .stat-card h3 {
+            font-size: 2em;
+            margin: 0;
+            color: #fff;
+        }
+        .stat-card p {
+            margin: 5px 0 0 0;
+            opacity: 0.9;
+        }
+        .table-info {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+        }
+        .field-count {
+            color: #6c757d;
+            font-weight: bold;
+        }
+        .category-header {
+            background: linear-gradient(90deg, #28a745, #20c997);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 30px 0 20px 0;
+            text-align: center;
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">ChooseWise DB Viewer</div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container">
+            <h1>ChooseWise Database Tables</h1>
+            <div class="db-overview">
+                <h2>📊 Database Overview</h2>
+                <div class="overview-stats">
+                    <div class="stat-card">
+                        <h3>15</h3>
+                        <p>Total Tables</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>200+</h3>
+                        <p>Total Fields</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>6</h3>
+                        <p>Categories</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>MongoDB</h3>
+                        <p>Database Type</p>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary refresh-btn" onclick="loadTables()">Refresh All Data</button>
+            
+            <!-- Core User Management Tables -->
+            <div class="table-container">
+                <h2>👥 Users Table</h2>
+                <p>Complete user profiles, authentication, and personal information</p>
+                <div id="usersTable">Loading...</div>
+            </div>
+            
+            <div class="table-container">
+                <h2>📊 User Sessions Table</h2>
+                <p>Active user sessions and authentication tokens</p>
+                <div id="sessionsTable">Loading...</div>
+            </div>
+            
+            <!-- Career Assessment Tables -->
+            <div class="table-container">
+                <h2>🧠 Assessment Results Table</h2>
+                <p>Career assessment responses and AI-generated recommendations</p>
+                <div id="assessmentTable">Loading...</div>
+            </div>
+            
+            <div class="table-container">
+                <h2>🎯 Career Paths Table</h2>
+                <p>Available technology career paths and their requirements</p>
+                <div id="careersTable">Loading...</div>
+            </div>
+            
+            <!-- Resume and Job Management Tables -->
+            <div class="table-container">
+                <h2>📄 Resume Data Table</h2>
+                <p>Uploaded resumes, extracted text, and skill analysis</p>
+                <div id="resumeTable">Loading...</div>
+            </div>
+            
+            <div class="table-container">
+                <h2>💼 Jobs Table</h2>
+                <p>Job opportunities from LinkedIn, Naukri, and other platforms</p>
+                <div id="jobsTable">Loading...</div>
+            </div>
+            
+            <div class="table-container">
+                <h2>🎯 Job Applications Table</h2>
+                <p>User job applications and tracking status</p>
+                <div id="applicationsTable">Loading...</div>
+            </div>
+            
+            <!-- Learning and Skills Tables -->
+            <div class="table-container">
+                <h2>🗺️ Learning Roadmaps Table</h2>
+                <p>Personalized learning paths and progress tracking</p>
+                <div id="roadmapsTable">Loading...</div>
+            </div>
+            
+            <div class="table-container">
+                <h2>🔧 Skills Database Table</h2>
+                <p>Technology skills, categories, and market demand data</p>
+                <div id="skillsTable">Loading...</div>
+            </div>
+            
+            <div class="table-container">
+                <h2>📚 Courses Table</h2>
+                <p>Integrated courses from Coursera, Udemy, edX, and other platforms</p>
+                <div id="coursesTable">Loading...</div>
+            </div>
+            
+            <!-- AI and Analytics Tables -->
+            <div class="table-container">
+                <h2>🤖 AI Interactions Table</h2>
+                <p>Chatbot conversations and AI recommendation logs</p>
+                <div id="aiTable">Loading...</div>
+            </div>
+            
+            <div class="table-container">
+                <h2>📈 User Analytics Table</h2>
+                <p>User behavior, feature usage, and engagement metrics</p>
+                <div id="analyticsTable">Loading...</div>
+            </div>
+            
+            <!-- System Management Tables -->
+            <div class="table-container">
+                <h2>🌐 Visitors Table</h2>
+                <p>Website visitor tracking and traffic analytics</p>
+                <div id="visitorsTable">Loading...</div>
+            </div>
+            
+            <div class="table-container">
+                <h2>📝 System Logs Table</h2>
+                <p>Application logs, errors, and system events</p>
+                <div id="logsTable">Loading...</div>
+            </div>
+            
+            <div class="table-container">
+                <h2>⚙️ Configuration Table</h2>
+                <p>System settings, API keys, and platform configurations</p>
+                <div id="configTable">Loading...</div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function loadTables() {
+            // Comprehensive table information with field details
+            const tableInfo = {
+                users: {
+                    category: "Core User Management",
+                    description: "Complete user profiles, authentication, and personal information",
+                    fieldCount: 19,
+                    keyFields: ["_id", "username", "email", "password", "profile", "skills", "preferences"]
+                },
+                sessions: {
+                    category: "Core User Management", 
+                    description: "Active user sessions and authentication tokens",
+                    fieldCount: 10,
+                    keyFields: ["_id", "userId", "sessionToken", "deviceInfo", "ipAddress", "loginTime"]
+                },
+                assessments: {
+                    category: "Career Assessment",
+                    description: "Career assessment responses and AI-generated recommendations", 
+                    fieldCount: 11,
+                    keyFields: ["_id", "userId", "responses", "skillScores", "careerRecommendations", "topCareerPath"]
+                },
+                careers: {
+                    category: "Career Assessment",
+                    description: "Available technology career paths and their requirements",
+                    fieldCount: 16,
+                    keyFields: ["_id", "name", "category", "requiredSkills", "marketData", "roadmap"]
+                },
+                resumes: {
+                    category: "Resume & Job Management",
+                    description: "Uploaded resumes, extracted text, and skill analysis",
+                    fieldCount: 16,
+                    keyFields: ["_id", "userId", "fileName", "extractedText", "skillsDetected", "processingStatus"]
+                },
+                jobs: {
+                    category: "Resume & Job Management",
+                    description: "Job opportunities from LinkedIn, Naukri, and other platforms",
+                    fieldCount: 20,
+                    keyFields: ["_id", "title", "company", "location", "skills", "applicationUrl"]
+                },
+                applications: {
+                    category: "Resume & Job Management",
+                    description: "User job applications and tracking status",
+                    fieldCount: 15,
+                    keyFields: ["_id", "userId", "jobId", "applicationStatus", "matchScore", "appliedAt"]
+                },
+                roadmaps: {
+                    category: "Learning & Skills",
+                    description: "Personalized learning paths and progress tracking",
+                    fieldCount: 17,
+                    keyFields: ["_id", "userId", "careerPath", "roadmapSteps", "progressPercentage", "currentStep"]
+                },
+                skills: {
+                    category: "Learning & Skills",
+                    description: "Technology skills, categories, and market demand data",
+                    fieldCount: 16,
+                    keyFields: ["_id", "name", "category", "marketDemand", "averageSalaryImpact", "learningResources"]
+                },
+                courses: {
+                    category: "Learning & Skills",
+                    description: "Integrated courses from Coursera, Udemy, edX, and other platforms",
+                    fieldCount: 22,
+                    keyFields: ["_id", "title", "provider", "skillsCovered", "price", "rating"]
+                },
+                aiInteractions: {
+                    category: "AI & Analytics",
+                    description: "Chatbot conversations and AI recommendation logs",
+                    fieldCount: 17,
+                    keyFields: ["_id", "userId", "interactionType", "userInput", "aiResponse", "confidence"]
+                },
+                analytics: {
+                    category: "AI & Analytics",
+                    description: "User behavior, feature usage, and engagement metrics",
+                    fieldCount: 18,
+                    keyFields: ["_id", "userId", "eventType", "eventCategory", "deviceInfo", "timestamp"]
+                },
+                visitors: {
+                    category: "System Management",
+                    description: "Website visitor tracking and traffic analytics",
+                    fieldCount: 20,
+                    keyFields: ["_id", "sessionId", "ipAddress", "landingPage", "geolocation", "utmSource"]
+                },
+                logs: {
+                    category: "System Management",
+                    description: "Application logs, errors, and system events",
+                    fieldCount: 19,
+                    keyFields: ["_id", "level", "message", "module", "errorCode", "stackTrace"]
+                },
+                config: {
+                    category: "Configuration",
+                    description: "System settings, API keys, and platform configurations",
+                    fieldCount: 16,
+                    keyFields: ["_id", "key", "value", "category", "isEncrypted", "lastModifiedBy"]
+                }
+            };
+
+            // Mock data for demonstration
+            const mockData = {
+                users: [
+                    { id: 1, username: 'john_doe', email: 'john@email.com', created_at: '2025-01-15', status: 'Active' },
+                    { id: 2, username: 'sarah_chen', email: 'sarah@email.com', created_at: '2025-01-14', status: 'Active' }
+                ],
+                sessions: [
+                    { session_id: 'sess_123', user_id: 1, login_time: '2025-01-15 10:30:00', status: 'Active' }
+                ],
+                assessments: [
+                    { id: 1, user_id: 1, career_path: 'Full Stack Developer', score: 85, completed_at: '2025-01-15' }
+                ],
+                careers: [
+                    { id: 1, name: 'Full Stack Developer', category: 'Web Development', avg_salary: '$95,000', demand: 'High' }
+                ],
+                resumes: [
+                    { id: 1, user_id: 1, filename: 'john_resume.pdf', skills_detected: 'JavaScript, React, Node.js', upload_date: '2025-01-15' }
+                ],
+                jobs: [
+                    { id: 1, title: 'Senior Full Stack Developer', company: 'TechCorp', location: 'San Francisco', salary: '$120,000' }
+                ],
+                applications: [
+                    { id: 1, user_id: 1, job_id: 1, status: 'Applied', applied_date: '2025-01-15', match_score: '88%' }
+                ],
+                roadmaps: [
+                    { id: 1, user_id: 1, career_path: 'Full Stack Developer', progress: '45%', current_step: 'React Fundamentals' }
+                ],
+                skills: [
+                    { id: 1, name: 'JavaScript', category: 'Programming', demand_level: 'Very High', avg_salary_impact: '+15%' }
+                ],
+                courses: [
+                    { id: 1, title: 'Complete JavaScript Course', provider: 'Udemy', rating: '4.8', price: '$89.99' }
+                ],
+                aiInteractions: [
+                    { id: 1, user_id: 1, interaction_type: 'Career Recommendation', timestamp: '2025-01-15 10:45:00' }
+                ],
+                analytics: [
+                    { date: '2025-01-15', new_users: 12, assessments_completed: 8, resumes_uploaded: 5 }
+                ],
+                visitors: [
+                    { id: 1, ip_address: '192.168.1.100', visit_time: '2025-01-15 10:30:00', page_visited: '/assessment' }
+                ],
+                logs: [
+                    { id: 1, level: 'INFO', message: 'User login successful', timestamp: '2025-01-15 10:30:00' }
+                ],
+                config: [
+                    { key: 'openai_api_enabled', value: 'true', category: 'AI Services', last_updated: '2025-01-15' }
+                ]
+            };
+            
+            // Group tables by category
+            const categories = {};
+            Object.keys(tableInfo).forEach(tableName => {
+                const category = tableInfo[tableName].category;
+                if (!categories[category]) {
+                    categories[category] = [];
+                }
+                categories[category].push(tableName);
+            });
+
+            // Load all tables with enhanced information
+            Object.keys(mockData).forEach(tableName => {
+                const elementId = getTableElementId(tableName);
+                const element = document.getElementById(elementId);
+                if (element) {
+                    const info = tableInfo[tableName];
+                    const tableHtml = createEnhancedTable(mockData[tableName], info);
+                    element.innerHTML = tableHtml;
+                }
+            });
+
+            // Add category headers
+            addCategoryHeaders();
+        }
+        
+        function createEnhancedTable(data, info) {
+            if (!data || data.length === 0) return '<p>No data available</p>';
+            
+            let html = `
+                <div class="table-info">
+                    <strong>📋 Table Information:</strong><br>
+                    <strong>Description:</strong> ${info.description}<br>
+                    <strong>Total Fields:</strong> <span class="field-count">${info.fieldCount}</span><br>
+                    <strong>Key Fields:</strong> ${info.keyFields.join(', ')}<br>
+                    <strong>Sample Records:</strong> ${data.length}
+                </div>
+            `;
+            
+            const headers = Object.keys(data[0]);
+            html += '<table><thead><tr>';
+            headers.forEach(header => html += `<th>${header.replace('_', ' ').toUpperCase()}</th>`);
+            html += '</tr></thead><tbody>';
+            
+            data.forEach(row => {
+                html += '<tr>';
+                headers.forEach(header => {
+                    let value = row[header] || '';
+                    if (typeof value === 'string' && value.length > 50) {
+                        value = value.substring(0, 50) + '...';
+                    }
+                    html += `<td>${value}</td>`;
+                });
+                html += '</tr>';
+            });
+            
+            html += '</tbody></table>';
+            return html;
+        }
+        
+        function getTableElementId(tableName) {
+            const mapping = {
+                users: 'usersTable',
+                sessions: 'sessionsTable', 
+                assessments: 'assessmentTable',
+                careers: 'careersTable',
+                resumes: 'resumeTable',
+                jobs: 'jobsTable',
+                applications: 'applicationsTable',
+                roadmaps: 'roadmapsTable',
+                skills: 'skillsTable',
+                courses: 'coursesTable',
+                aiInteractions: 'aiTable',
+                analytics: 'analyticsTable',
+                visitors: 'visitorsTable',
+                logs: 'logsTable',
+                config: 'configTable'
+            };
+            return mapping[tableName] || tableName + 'Table';
+        }
+        
+        function addCategoryHeaders() {
+            const categories = {
+                "Core User Management": ["usersTable", "sessionsTable"],
+                "Career Assessment": ["assessmentTable", "careersTable"],
+                "Resume & Job Management": ["resumeTable", "jobsTable", "applicationsTable"],
+                "Learning & Skills": ["roadmapsTable", "skillsTable", "coursesTable"],
+                "AI & Analytics": ["aiTable", "analyticsTable"],
+                "System Management": ["visitorsTable", "logsTable", "configTable"]
+            };
+            
+            Object.keys(categories).forEach(categoryName => {
+                const firstTableId = categories[categoryName][0];
+                const firstElement = document.getElementById(firstTableId);
+                if (firstElement) {
+                    const categoryHeader = document.createElement('div');
+                    categoryHeader.className = 'category-header';
+                    categoryHeader.innerHTML = `📊 ${categoryName} Tables`;
+                    firstElement.parentElement.parentElement.insertBefore(categoryHeader, firstElement.parentElement);
+                }
+            });
+        }
+        
+        loadTables();
+   
+    </script>
+</body>
+</html>

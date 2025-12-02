@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jobs - ChooseWise</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="visitor-tracker.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">ChooseWise</div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="careers.html" class="nav-link">Careers</a></li>
+                <li><a href="roadmap.html" class="nav-link">Roadmap</a></li>
+                <li><a href="courses.html" class="nav-link">Courses</a></li>
+                <li><a href="jobs.html" class="nav-link active">Jobs</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            <button class="theme-toggle" id="themeToggle">🌙</button>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <section class="page-header">
+            <div class="container">
+                <h1>Job Opportunities</h1>
+                <p>Discover tech job openings from top companies</p>
+            </div>
+        </section>
+
+        <section class="resume-upload">
+            <div class="container">
+                <div class="upload-card">
+                    <h2>📄 Upload Your Resume</h2>
+                    <p>Get personalized job recommendations based on your skills and experience</p>
+                    <div class="upload-area" id="uploadArea">
+                        <input type="file" id="resumeFile" accept=".pdf,.doc,.docx" hidden>
+                        <div class="upload-content">
+                            <div class="upload-icon">📁</div>
+                            <p>Drag & drop your resume here or <span class="upload-link">browse files</span></p>
+                            <small>Supports PDF, DOC, DOCX (Max 5MB)</small>
+                        </div>
+                    </div>
+                    <div class="resume-analysis" id="resumeAnalysis" style="display: none;">
+                        <h3>Resume Analysis</h3>
+                        <div class="skills-detected" id="skillsDetected"></div>
+                        <button class="btn btn-primary" id="findMatchingJobs">Find Matching Jobs</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="jobs-section">
+            <div class="container">
+                <div class="jobs-stats">
+                    <div class="stat-card">
+                        <h3>👥 Registered Users</h3>
+                        <div class="stat-number" id="registeredCount">0</div>
+                        <p>Total accounts created</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>💼 Active Jobs</h3>
+                        <div class="stat-number">150+</div>
+                        <p>Live opportunities</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>🏢 Companies</h3>
+                        <div class="stat-number">50+</div>
+                        <p>Hiring partners</p>
+                    </div>
+                </div>
+                
+                <div class="jobs-filter">
+                    <h2>Job Opportunities</h2>
+                    <div class="filter-options">
+                        <button class="filter-btn active" data-filter="all">All Jobs</button>
+                        <button class="filter-btn" data-filter="matched">Resume Matched</button>
+                        <button class="filter-btn" data-filter="internship">🎓 Internships</button>
+                        <button class="filter-btn" data-filter="frontend">Frontend</button>
+                        <button class="filter-btn" data-filter="backend">Backend</button>
+                        <button class="filter-btn" data-filter="fullstack">Full Stack</button>
+                        <button class="filter-btn" data-filter="data">Data Science</button>
+                    </div>
+                </div>
+                <div class="jobs-list" id="jobsList">
+                    <!-- Job cards will be loaded by JavaScript -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 ChooseWise. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="resume-analyzer.js"></script>
+    
+    <style>
+        .jobs-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .stat-card h3 {
+            margin: 0 0 0.5rem 0;
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+        
+        .stat-card .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 0.5rem 0;
+        }
+        
+        .stat-card p {
+            margin: 0;
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+        }
+    </style>
+    
+    <script>
+        // Update registered users count
+        function updateRegisteredCount() {
+            const users = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+            const events = JSON.parse(localStorage.getItem('userEvents') || '[]');
+            
+            // Count unique users from both sources
+            const allUsers = new Set();
+            
+            users.forEach(user => allUsers.add(user.email));
+            events.forEach(event => {
+                if (event.type === 'registration') {
+                    allUsers.add(event.email);
+                }
+            });
+            
+            document.getElementById('registeredCount').textContent = allUsers.size;
+        }
+        
+        // Update count on page load and every 5 seconds
+        document.addEventListener('DOMContentLoaded', updateRegisteredCount);
+        setInterval(updateRegisteredCount, 5000);
+    </script>
+</body>
+</html>

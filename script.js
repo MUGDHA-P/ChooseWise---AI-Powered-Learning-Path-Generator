@@ -358,12 +358,18 @@ function initTheme() {
 
 // Navigation active link highlighting
 function initNavigation() {
-    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    const currentPath = window.location.pathname;
+    const currentPage = currentPath.split('/').pop() || 'index.html';
     const navLinks = document.querySelectorAll('.nav-link');
     
     navLinks.forEach(link => {
         link.classList.remove('active');
-        if (link.getAttribute('href') === currentPage) {
+        const linkHref = link.getAttribute('href');
+        
+        // Handle root path and index.html
+        if ((currentPage === '' || currentPage === 'index.html' || currentPath === '/') && linkHref === 'index.html') {
+            link.classList.add('active');
+        } else if (linkHref === currentPage) {
             link.classList.add('active');
         }
     });
@@ -565,6 +571,14 @@ function initLoginModal() {
         if (user) {
             localStorage.setItem('user', JSON.stringify(user));
             
+            // Update last login for dashboard
+            const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+            const userIndex = registeredUsers.findIndex(u => u.email === user.email);
+            if (userIndex !== -1) {
+                registeredUsers[userIndex].lastLogin = new Date().toISOString();
+                localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+            }
+            
             // Send login notification email
             emailService.sendLoginEmail(user.email, user.name);
             
@@ -614,6 +628,16 @@ function initLoginModal() {
             users.push(newUser);
             localStorage.setItem('choosewise_users', JSON.stringify(users));
             localStorage.setItem('user', JSON.stringify(newUser));
+            
+            // Update registered users for dashboard
+            const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+            registeredUsers.push({
+                name: newUser.name,
+                email: newUser.email,
+                registrationDate: newUser.createdAt,
+                lastLogin: null
+            });
+            localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
             
             // Send welcome email
             emailService.sendWelcomeEmail(newUser.email, newUser.name);
@@ -825,26 +849,29 @@ function showLoginForm() {
 // Update UI for logged in user
 function updateUIForLoggedInUser(user) {
     const loginBtn = document.getElementById('loginBtn');
+    const signupBtn = document.querySelector('.btn-signup');
+    
     if (loginBtn) {
         loginBtn.textContent = `Hi, ${user.name.split(' ')[0]}`;
         loginBtn.style.background = 'var(--primary-color)';
         loginBtn.style.color = 'var(--background-color)';
         loginBtn.onclick = () => {
             if (confirm('Do you want to logout?')) {
-                localStorage.removeItem('user');
-                loginBtn.textContent = 'Login';
-                loginBtn.style.background = 'transparent';
-                loginBtn.style.color = 'var(--primary-color)';
-                loginBtn.onclick = null;
+                localStorage.removeItem('choosewise_current_user');
                 location.reload();
             }
         };
+    }
+    
+    // Hide signup button when user is logged in
+    if (signupBtn) {
+        signupBtn.style.display = 'none';
     }
 }
 
 // Check if user is already logged in
 function checkUserSession() {
-    const user = JSON.parse(localStorage.getItem('user') || 'null');
+    const user = JSON.parse(localStorage.getItem('choosewise_current_user') || 'null');
     if (user) {
         updateUIForLoggedInUser(user);
     }
@@ -1060,6 +1087,29 @@ function trackAssessmentCompletion(careerRecommendation) {
     }
 }
 
+// Initialize login button to redirect to auth page
+function initLoginButton() {
+    const loginBtn = document.getElementById('loginBtn');
+    if (loginBtn && !JSON.parse(localStorage.getItem('choosewise_current_user') || 'null')) {
+        loginBtn.onclick = () => {
+            window.location.href = 'auth.html';
+        };
+    }
+}
+
+// Track visitor data
+function trackVisitor() {
+    const visitors = JSON.parse(localStorage.getItem('siteVisitors') || '[]');
+    const visitor = {
+        timestamp: new Date().toISOString(),
+        page: window.location.pathname,
+        userAgent: navigator.userAgent,
+        ip: 'Unknown'
+    };
+    visitors.push(visitor);
+    localStorage.setItem('siteVisitors', JSON.stringify(visitors));
+}
+
 // Initialize all functionality when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     initTheme();
@@ -1070,9 +1120,10 @@ document.addEventListener('DOMContentLoaded', function() {
     loadJobs();
     initContactForm();
     initChatbot();
-    initLoginModal();
+    initLoginButton();
     loadDynamicRoadmap('all');
     checkUserSession();
+    trackVisitor();
 });
 
 // AI-Enhanced Chatbot with Advanced Knowledge Base
